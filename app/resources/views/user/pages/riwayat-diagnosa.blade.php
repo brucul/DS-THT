@@ -18,7 +18,6 @@
                                     <th>No. HP</th>
                                     <th>Alamat</th>
                                     <th>Hasil Diagnosa</th>
-                                    <th width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,7 +28,6 @@
                                     <td>{{ $r->jk }}</td>
                                     <td>{{ $r->no_hp }}</td>
                                     <td>{{ $r->alamat }}</td>
-                                    <td>{{ $r->diagnosa }}</td>
                                     <td>{{ $r->diagnosa }}</td>
                                 </tr>
                                 @endforeach

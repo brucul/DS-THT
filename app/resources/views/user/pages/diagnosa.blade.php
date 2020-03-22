@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <hr />
-                <input type="submit" name="submit" class="btn btn-outline-primary" value="OK">
+                <input type="submit" name="submit" class="btn btn-outline-primary" value="Proses">
             </form>
         </div>
     </div>

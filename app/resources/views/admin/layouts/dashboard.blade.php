@@ -62,7 +62,7 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid" style="height: 100%">
-                <center><h4 class="page-title">Sistem Pakar Diagnosa Penyakit THT</h4></center>
+                <center><h4 class="page-title">Sistem Pakar Diagnosis Penyakit THT</h4></center>
                     @yield('content')
             </div>
             <!-- ============================================================== -->

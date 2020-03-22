@@ -44,9 +44,9 @@
 	    				<li class="{{ (request()->is('info-penyakit*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ route('info.home') }}">INFO PENYAKIT</a></li>
 	    				<li class="{{ (request()->is('diagnosa*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ route('diagnosa') }}">DIAGNOSA</a></li>
+	    					<a href="{{ route('diagnosa') }}">DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('riwayat-diagnosa*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}">RIWAYAT DIAGNOSA</a></li>
+	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}">RIWAYAT DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('profil*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ url('profil') }}/{{ $id }}">PROFIL {{@Auth::user()->name}}</a></li>
 	    			</ul>

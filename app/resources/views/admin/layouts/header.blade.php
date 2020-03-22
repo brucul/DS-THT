@@ -38,105 +38,29 @@
             <!-- Right side toggle and nav items -->
             <!-- ============================================================== -->
             <ul class="navbar-nav float-right">
+
                 <!-- ============================================================== -->
-                <!-- Comment -->
-                <!-- ==============================================================
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('public/admin/assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
+                    <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                        @php
+                            $id = Crypt::encrypt(Auth::user()->id);
+                        @endphp
+                        <a class="dropdown-item" href="{{ url('admin/users-account/edit') }}/{{ $id }}"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                        <a class="dropdown-item" href="{{ route('admin.users.account') }}"><i class="ti-settings m-r-5 m-l-5"></i> Users Account Setting</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="fa fa-power-off m-r-5 m-l-5"></i> {{ __('Logout') }} </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
-                </li> -->
+                </li>
                 <!-- ============================================================== -->
-                <!-- End Comment -->
+                <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Messages -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-bell"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
-                        <ul class="list-style-none">
-                            <li>
-                                <div class="">
-                                 <!-- Message -->
-                                 <a href="javascript:void(0)" class="link border-top">
-                                    <div class="d-flex no-block align-items-center p-10">
-                                        <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">Event today</h5> 
-                                            <span class="mail-desc">Just a reminder that event</span> 
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- Message -->
-                                <a href="javascript:void(0)" class="link border-top">
-                                    <div class="d-flex no-block align-items-center p-10">
-                                        <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">Settings</h5> 
-                                            <span class="mail-desc">You can customize this template</span> 
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- Message -->
-                                <a href="javascript:void(0)" class="link border-top">
-                                    <div class="d-flex no-block align-items-center p-10">
-                                        <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">Pavan kumar</h5> 
-                                            <span class="mail-desc">Just see the my admin!</span> 
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- Message -->
-                                <a href="javascript:void(0)" class="link border-top">
-                                    <div class="d-flex no-block align-items-center p-10">
-                                        <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                        <div class="m-l-10">
-                                            <h5 class="m-b-0">Luanch Admin</h5> 
-                                            <span class="mail-desc">Just see the my new admin!</span> 
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <!-- ============================================================== -->
-            <!-- End Messages -->
-            <!-- ============================================================== -->
-
-            <!-- ============================================================== -->
-            <!-- User profile and search -->
-            <!-- ============================================================== -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('public/admin/assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
-                <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                        <i class="fa fa-power-off m-r-5 m-l-5"></i>
-                        {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </li>
-            <!-- ============================================================== -->
-            <!-- User profile and search -->
-            <!-- ============================================================== -->
-        </ul>
-    </div>
-</nav>
+            </ul>
+        </div>
+    </nav>
 </header>

@@ -25,7 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('is_admin', '!=', 1);
+        return view('admin.pages.user-account', ['users'=>$users]);
     }
 
     /**
@@ -68,7 +69,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $id_user = Crypt::decrypt($id);
+        $user = User::findOrFail($id_user);
+        return view('admin.pages.edit-user', ['user'=>$user]);
     }
 
     /**
@@ -85,7 +88,7 @@ class UserController extends Controller
 
         $rules = array(
             'nama' =>  'required',
-            'email' => 'required| max:10',
+            'email' => 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
