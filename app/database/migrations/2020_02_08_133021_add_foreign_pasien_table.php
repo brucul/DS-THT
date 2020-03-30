@@ -17,6 +17,12 @@ class AddForeignPasienTable extends Migration
             $table->foreign('id_user')
                   ->references('id')->on('users')
                   ->onDelete('cascade');
+            $table->foreign('gejala')
+                  ->references('kode_gejala')->on('gejala')
+                  ->onDelete('cascade');
+            $table->foreign('diagnosis')
+                  ->references('kode_penyakit')->on('penyakit')
+                  ->onDelete('cascade');
         });
     }
 

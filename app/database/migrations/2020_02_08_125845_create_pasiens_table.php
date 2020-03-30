@@ -20,7 +20,9 @@ class CreatePasiensTable extends Migration
             $table->set('jk', ['Laki-laki', 'Perempuan']);
             $table->char('no_hp');
             $table->longText('alamat');
-            $table->string('diagnosa');
+            $table->string('diagnosis');
+            $table->string('prosentase');
+            $table->string('gejala');
             $table->softDeletes();
             $table->timestamps();
         });

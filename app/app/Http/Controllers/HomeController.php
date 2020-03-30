@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Pasien;
-use App\Gejala;
-use App\Penyakit;
-use App\InfoPenyakit;
 
 class HomeController extends Controller
 {

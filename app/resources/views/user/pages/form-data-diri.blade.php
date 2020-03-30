@@ -30,11 +30,11 @@
                             </div>
                             <div class="form-group">
                                 <label>E-mail</label>
-                                <input type="text" name="email" class="form-control" value="{{ $user->email }}" required>
+                                <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
                             </div>
                             <div class="form-group">
                                 <label>Verifikasi E-mail ( Opsional )</label>
-                                <input type="text" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
+                                <input type="email" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
                             </div>
                             <hr/>
                             <input type="submit" class="btn btn-outline-custom" name="submit" value="Update">

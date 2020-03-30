@@ -14,11 +14,11 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>Nama Lengkap</label>
-                                    <input type="text" name="nama" class="form-control">
+                                    <input type="text" name="nama" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Tanggal Lahir</label>
-                                    <input type="date" name="tgl_lahir" class="form-control">
+                                    <input type="date" name="tgl_lahir" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Jenis Kelamin</label>
@@ -35,11 +35,11 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>No. HP</label>
-                                    <input type="text" name="no_hp" class="form-control">
+                                    <input type="text" name="no_hp" class="form-control" required onKeyPress="return event.charCode >= 48 && event.charCode <=57">
                                 </div>
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <textarea name="alamat" class="form-control" style="height: 100px"></textarea>
+                                    <textarea name="alamat" class="form-control" style="height: 100px" required></textarea>
                                 </div>
                             </div>
                         </div>

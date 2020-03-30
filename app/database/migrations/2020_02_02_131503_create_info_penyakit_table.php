@@ -16,7 +16,7 @@ class CreateInfoPenyakitTable extends Migration
         Schema::create('info_penyakit', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('kode');
-            $table->longText('detail');
+            $table->longText('detail')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

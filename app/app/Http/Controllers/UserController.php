@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', '!=', 1);
+        $users = DB::table('users')->where('is_admin', '!=', 1)->get();
         return view('admin.pages.user-account', ['users'=>$users]);
     }
 
@@ -105,6 +105,32 @@ class UserController extends Controller
             );
             User::whereId($id)->update($form_data);
             return back()->with('toast_success', 'Data Berhasil Diubah !');
+        }
+    }
+
+    public function update_pass_admin(Request $request)
+    {
+        $id=$request->id;
+        $rules = array(
+            'new_pass' => 'required',
+            'new_pass2' => 'required',
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()){
+            return back()->with('toast_error', $error->errors()->all());
+            //return response()->json(['ERROR!' => $error->errors()->all()]);
+        } elseif ($request->new_pass != $request->new_pass2) {
+            return back()->with('toast_error', 'Password Baru Tidak Cocok !');
+            //return response()->json(['ERROR!' => 'Password Baru Tidak Cocok']);
+        } else {
+            $form_data = array(
+                'password' => Hash::make($request->new_pass),
+            );
+            User::whereId($id)->update($form_data);
+
+            return back()->with('toast_success', 'Password Berhasil Diubah !');
         }
     }
 

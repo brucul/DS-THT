@@ -64,5 +64,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.']
 	Route::get('users-account', 'UserController@index')->name('users.account');
 	Route::get('users-account/edit/{id}', 'UserController@edit')->name('users.account.edit');
 	Route::post('users-account/update-profil', 'UserController@update_profil')->name('update.profil');
-	Route::post('users-account/update-pass', 'UserController@update_pass')->name('update.pass');
+	Route::post('users-account/update-pass', 'UserController@update_pass_admin')->name('update.pass');
 });
