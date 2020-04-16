@@ -11,7 +11,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="tabel_gejala" class="table table-striped table-bordered">
+            <table id="tabel_pasien" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th width="5%">No</th>
@@ -104,7 +104,7 @@
             }
         });
 
-        $('#tabel_gejala').DataTable({
+        $('#tabel_pasien').DataTable({
             processing: true,
             serverSide: true,
             ajax:{
@@ -116,7 +116,7 @@
             { data: 'jk', name: 'jk' },
             { data: 'no_hp', name: 'no_hp' },
             { data: 'alamat', name: 'alamat' },
-            { data: 'diagnosa', name: 'diagnosa' },
+            { data: 'diagnosis', name: 'diagnosis' },
             { data: 'action', name: 'action', orderable: false }
             ]
         });
@@ -167,7 +167,7 @@
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
                             $('#sample_form')[0].reset();
-                            $('#tabel_gejala').DataTable().ajax.reload();
+                            $('#tabel_pasien').DataTable().ajax.reload();
                         }
                         $('#form_result').html(html);
                     }
@@ -199,7 +199,7 @@
                                 $('#formModal').modal('hide');
                             }, 1500);
                             $('#sample_form')[0].reset();
-                            $('#tabel_gejala').DataTable().ajax.reload();
+                            $('#tabel_pasien').DataTable().ajax.reload();
                         }
                         $('#form_result').html(html);
                     }
@@ -225,7 +225,7 @@
                 success:function(data)
                 {
                     setTimeout(function(){
-                        $('#tabel_gejala').DataTable().ajax.reload();
+                        $('#tabel_pasien').DataTable().ajax.reload();
                         $('#confirmModal').modal('hide');
                     }, 2000);
                 }

@@ -16,36 +16,22 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title m-b-0">Browesr statistics</h5>
+                <h5 class="card-title m-b-0">Penyakit Telinga</h5>
             </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Browser</th>
-                        <th scope="col">Visits</th>
+                        <th scope="col">Jenis Penyakit</th>
+                        <th scope="col">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($telinga as $tlg)
                     <tr>
-                        <td>Chrome</td>
-                        <td>8850</td>
+                        <td>{{ $tlg->penyakit }}</td>
+                        <td>{{ $tlg->jumlah }}</td>
                     </tr>
-                    <tr>
-                        <td>Firefox</td>
-                        <td>1200</td>
-                    </tr>
-                    <tr>
-                        <td>Internet Explorer</td>
-                        <td>1540</td>
-                    </tr>
-                    <tr>
-                        <td>Opera</td>
-                        <td>1230</td>
-                    </tr>
-                    <tr>
-                        <td>Safari</td>
-                        <td>1590</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -53,36 +39,22 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title m-b-0">Website statistics</h5>
+                <h5 class="card-title m-b-0">Penyakit Hidung</h5>
             </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Site</th>
-                        <th scope="col">Visits</th>
+                        <th scope="col">Jenis Penyakit</th>
+                        <th scope="col">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($hidung as $hdg)
                     <tr>
-                        <td><a href="#" class="link">Themeforest.com</a></td>
-                        <td>1240</td>
+                        <td>{{ $hdg->penyakit }}</td>
+                        <td>{{ $hdg->jumlah }}</td>
                     </tr>
-                    <tr>
-                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                        <td>1200</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                        <td>1542</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                        <td>1230</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">Themedesigner.in</a></td>
-                        <td>1542</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -90,36 +62,22 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title m-b-0">Visited Pages</h5>
+                <h5 class="card-title m-b-0">Penyakit Tenggorokan</h5>
             </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Page</th>
-                        <th scope="col">Visits</th>
+                        <th scope="col">Jenis Penyakit</th>
+                        <th scope="col">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($tenggorokan as $tgg)
                     <tr>
-                        <td><a href="#" class="link">Freebies</a></td>
-                        <td>1240</td>
+                        <td>{{ $tgg->penyakit }}</td>
+                        <td>{{ $tgg->jumlah }}</td>
                     </tr>
-                    <tr>
-                        <td><a href="#" class="link">Blog</a></td>
-                        <td>1200</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">Work</a></td>
-                        <td>1542</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">Site Template</a></td>
-                        <td>1230</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="link">All categories</a></td>
-                        <td>1542</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

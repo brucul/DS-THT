@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->where('is_admin', '!=', 1)->get();
+        $users = DB::table('users')->where('is_admin', null)->get();
         return view('admin.pages.user-account', ['users'=>$users]);
     }
 
@@ -87,8 +87,8 @@ class UserController extends Controller
         $email = DB::table('users')->where([['id', '!=', $id], ['email', '=', $request->email]])->count();
 
         $rules = array(
-            'nama' =>  'required',
-            'email' => 'required',
+            'nama' =>  'required|min:5|max|100',
+            'email' => 'required|email|min:10',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -112,8 +112,8 @@ class UserController extends Controller
     {
         $id=$request->id;
         $rules = array(
-            'new_pass' => 'required',
-            'new_pass2' => 'required',
+            'new_pass' => 'required|min:8',
+            'new_pass2' => 'required|min:8',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -139,9 +139,9 @@ class UserController extends Controller
         $id=$request->id;
         $password = User::find($id)->password;
         $rules = array(
-            'old_pass' => 'required',
-            'new_pass' => 'required',
-            'new_pass2' => 'required',
+            'old_pass' => 'required|min:8',
+            'new_pass' => 'required|min:8',
+            'new_pass2' => 'required|min:8',
         );
 
         $error = Validator::make($request->all(), $rules);

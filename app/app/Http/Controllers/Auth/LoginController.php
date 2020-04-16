@@ -48,6 +48,8 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
+
+        //$login_type = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
    
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {

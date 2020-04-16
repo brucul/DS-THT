@@ -17,7 +17,8 @@
    ============================================================ */
 
    body {
-    background-color: #f7f7f7;
+    background: url(../img/bg3.jpg) no-repeat;
+    background-size: 100% 100%;
     font-family: 'Open Sans', sans-serif;
     line-height:28px;
 
@@ -46,23 +47,23 @@
    PANEL
    ============================================================ */
     .panel-custom {
-      border-color: #cab2ff;
+      border-color: #00ff8c;
     }
     .panel-custom > .panel-heading {
-      color: #3f10a3;
+      color: black;
       font-weight: bolder;
-      background-color: #cab2ff;
-      border-color: #cab2ff;
+      background-color: #00ff8c;
+      border-color: #00ff8c;
     }
     .panel-custom > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #cab2ff;
+      border-top-color: #00ff8c;
     }
     .panel-custom > .panel-heading .badge {
       color: #f5f5f5;
-      background-color: #cab2ff;
+      background-color: #00ff8c;
     }
     .panel-custom > .panel-footer + .panel-collapse > .panel-body {
-      border-bottom-color: #cab2ff;
+      border-bottom-color: #00ff8c;
     }
 
 /* =============================================================
@@ -107,7 +108,7 @@
         -moz-transition: all 0.3s ease-out;
         -ms-transition: all 0.3s ease-out;
         -o-transition: all 0.3s ease-out;
-        border: 2px solid #cab2ff;
+        border: 2px solid #00ff8c;
     }
 
 
@@ -195,7 +196,7 @@
   /* Style for Circular Checkbox */
     .checkbox-label .checkbox-custom.circular {
         border-radius: 50%;
-        border: 2px solid #cab2ff;
+        border: 2px solid #00ff8c;
     }
 
     .checkbox-label input:checked ~ .checkbox-custom.circular {
@@ -220,9 +221,22 @@
         border-radius: 50%;
 }
 
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.overlay-bg {
+  background: -moz-linear-gradient(left, rgba(0,0,0, 0.2) 0%, rgba(0,0,0, 0.2) 100%);
+  background: -webkit-linear-gradient(left, rgba(0,0,0, 0.2) 0%, rgba(0,0,0, 0.2) 100%);
+  background: linear-gradient(to right, rgba(0,0,0, 0.2) 0%, rgba(0,0,0, 0.2) 100%);
+}
 
 .top-container {
-    background-color:#9170E4;
+    background: url(../img/3.jpg) no-repeat top center/cover;
     padding: 30px;
 }
 
@@ -235,19 +249,19 @@
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
 .sticky + .content-wrapper {
-  padding-top: 75px;
+  padding-top: 85px;
 }
 
 .menu-top {
-    background-color: #f7f7f7;
-    border-bottom:5px solid #9170E4;
+    background-color: rgba(60, 64, 143, 0.85);
+    border-bottom:5px solid #00ff8c;
     width:100%;
     display: inline-block;
     box-shadow: 0px 0px 20px rgba(0,0,0,.7);
 }
 
 .menu-top-active {
-    background-color:#9170E4;
+    background-color:#00ff8c;
 }
 .menu-top-active a {
     color: #f7f7f7;
@@ -263,8 +277,7 @@
 }
 
 #top-menu a:hover {
-    background-color:#9170E4;
-    color: #f7f7f7;
+    background-color:#00ff8c;
     text-decoration:none;
     font-weight:bold;
     padding: 25px 15px 25px 15px;
@@ -417,7 +430,7 @@
     font-size:13px;
     background-color: #f7f7f7;
     text-align:right;
-    border-top:5px solid #9170E4;
+    border-top:5px solid #00ff8c;
     box-shadow: 0px 0px 20px rgba(0,0,0,.7);
 }
 
@@ -426,42 +439,48 @@
 }
 
 .btn-logout {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    margin: 5px 100px; 
-    float: right;
-    padding: 6px 8px 0px 8px;
-    border: 3px solid white;
-    border-radius: 10px;
+    line-height: 40px;
+  padding: 10px 10px 0;
+  border-radius: 20px;
+  background: transparent;
+  border: 2px solid #3c408f;
+  color: #3c408f;
+  display: inline-block;
+  font-weight: bold;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  float: right; 
 }
 .btn-logout:hover {
-    color: #9170E4;
-    background-color: white;
-    text-decoration: none;
-    border: 3px solid white;
-    border-radius: 10px;
+    background: #00ff8c;
+  color: black;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, .7);
+  text-decoration: none;
+  border: none;
 }
 
 .btn-outline-custom {
-  color: #9170E4;
+  color: #00ff8c;
   background-color: transparent;
   background-image: none;
-  border-color: #9170E4; }
+  border-color: #00ff8c; }
   .btn-outline-custom:hover {
     color: #fff;
-    background-color: #9170E4;
-    border-color: #9170E4; }
+    background-color: #00ff8c;
+    border-color: #00ff8c; }
   .btn-outline-custom:focus, .btn-outline-custom.focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }
   .btn-outline-custom.disabled, .btn-outline-custom:disabled {
-    color: #9170E4;
+    color: #00ff8c;
     background-color: transparent; }
   .btn-outline-custom:not(:disabled):not(.disabled):active, .btn-outline-custom:not(:disabled):not(.disabled).active,
   .show > .btn-outline-custom.dropdown-toggle {
     color: #fff;
-    background-color: #9170E4;
-    border-color: #9170E4; }
+    background-color: #00ff8c;
+    border-color: #00ff8c; }
     .btn-outline-custom:not(:disabled):not(.disabled):active:focus, .btn-outline-custom:not(:disabled):not(.disabled).active:focus,
     .show > .btn-outline-custom.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }

@@ -4,38 +4,28 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Sistem Pakar</title>
 
-        <link rel="shortcut icon" href="{{ asset('public/landing/img/fav.png') }}">
+        <link rel="shortcut icon" href="{{ asset('public/favicon.png') }}">
         <link rel="stylesheet" href="{{ asset('public/landing/css/linearicons.css') }}">
-        <link rel="stylesheet" href="{{ asset('public/landing/css/owl.carousel.css') }}">
         <link rel="stylesheet" href="{{ asset('public/landing/css/font-awesome.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('public/landing/css/animate.css') }}">
         <link rel="stylesheet" href="{{ asset('public/landing/css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ asset('public/landing/css/main.css') }}">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
-        <div id="top"></div>
         <!-- Start Header Area -->
         <header class="default-header">
             <div class="sticky-header">
                 <div class="container">
                     <div class="header-content d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="#top" class="smooth"><img src="{{ asset('public/landing/img/logo.png') }}" alt=""></a>
+                            <a href="" class="smooth"><img src="{{ asset('public/landing/img/logo.png') }}" alt=""></a>
                         </div>
                         <div class="right-bar d-flex align-items-center">
-                            <nav class="d-flex align-items-center">
-                                <a href="#" class="mobile-btn"><span class="lnr lnr-menu"></span></a>
-                            </nav>
                             <div class="search relative">
-                                <span class="lnr lnr-magnifier"></span>
-                                <form action="#" class="search-field">
-                                    <input type="text" placeholder="Search here" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search here'">
-                                    <button class="search-submit"><span class="lnr lnr-magnifier"></span></button>
-                                </form>
+                                <p>&nbsp;</p>
                             </div>
                             <div class="header-social d-flex align-items-center">
                             @if (Route::has('login'))
@@ -70,7 +60,7 @@
                         <div class="banner-content text-center">
                             <p class="text-uppercase text-white">Selamat Datang</p>
                             <h2 class="text-uppercase text-white">SISTEM PAKAR DIAGNOSIS PENYAKIT THT</h2>
-                            <a href="#" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="{{ route('diagnosa') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
                         </div>
                     </div>
                 </div>
@@ -78,11 +68,9 @@
         </section>
 
         <script src="{{ asset('public/landing/js/vendor/jquery-2.2.4.min.js') }}"></script>
-        <script src="{{ asset('public/landing/js/popper.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <script src="{{ asset('public/landing/js/vendor/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('public/landing/js/jquery.ajaxchimp.min.js') }}"></script>
         <script src="{{ asset('public/landing/js/jquery.sticky.js') }}"></script>
-        <script src="{{ asset('public/landing/js/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('public/landing/js/mixitup.min.js') }}"></script>
         <script src="{{ asset('public/landing/js/main.js') }}"></script>
     </body>

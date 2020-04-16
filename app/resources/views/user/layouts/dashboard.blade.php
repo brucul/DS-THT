@@ -8,6 +8,7 @@
         <!--[if IE]>
         	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/favicon.png') }}">
         <title>Sistem Pakar</title>
         <!-- BOOTSTRAP CORE STYLE  -->
           <link href="{{ asset('public/user/assets/css/bootstrap.css') }}" rel="stylesheet" />

@@ -6,7 +6,13 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ route('admin.home') }}">
+                <b class="logo-icon p-l-10">
+                    <img src="{{ asset('public/admin/assets/images/logo-icon.png') }}" alt="homepage" class="light-logo" />
+                </b>
+                <span class="logo-text">
+                    &emsp;<img src="{{ asset('public/admin/assets/images/logo-text.png') }}" alt="homepage" class="light-logo" />
+                </span>
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->

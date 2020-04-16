@@ -37,7 +37,7 @@
                                 <input type="email" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
                             </div>
                             <hr/>
-                            <input type="submit" class="btn btn-outline-custom" name="submit" value="Update">
+                            <input type="submit" class="btn btn-outline-success" name="submit" value="Update">
                         </div>
                     </div>
                 </form>
@@ -67,7 +67,7 @@
                             <input type="password" name="new_pass2" class="form-control" required>
                         </div>
                         <hr/>
-                        <input type="submit" class="btn btn-outline-custom" name="submit" value="Update">
+                        <input type="submit" class="btn btn-outline-success" name="submit" value="Update">
                     </div>
                 </form>
             </div>
