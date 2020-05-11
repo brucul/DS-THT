@@ -12,7 +12,7 @@ class GejalaTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('gejala')->insert(
+        $gejala=[
         	[ 'kode_gejala'=>'G1', 'gejala'=>'Amandel membengkak', 'jenis'=>'Tenggorokan' ],
         	[ 'kode_gejala'=>'G2', 'gejala'=>'Batuk', 'jenis'=>'Tenggorokan' ],
         	[ 'kode_gejala'=>'G3', 'gejala'=>'Bau mulut (halitosis)', 'jenis'=>'Tenggorokan' ],
@@ -61,6 +61,8 @@ class GejalaTableSeeder extends Seeder
         	[ 'kode_gejala'=>'G46', 'gejala'=>'Tenggorokan gatal', 'jenis'=>'Tenggorokan' ],
         	[ 'kode_gejala'=>'G47', 'gejala'=>'Terdapat benjolan pada tenggorokan', 'jenis'=>'Tenggorokan' ],
         	[ 'kode_gejala'=>'G48', 'gejala'=>'Wajah terasa nyeri atau mati rasa', 'jenis'=>'Umum' ],
-        );
+        ];
+
+        DB::table('gejala')->insert($gejala);
     }
 }

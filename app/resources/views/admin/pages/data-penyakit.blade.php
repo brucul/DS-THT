@@ -216,10 +216,22 @@
                 },
                 success:function(data)
                 {
-                    setTimeout(function(){
-                        $('#tabel_penyakit').DataTable().ajax.reload();
-                        $('#confirmModal').modal('hide');
-                    }, 2000);
+                    var html = '';
+                    if(data.errors){
+                        html = '<div class="alert alert-danger">';
+                        for(var count = 0; count < data.errors.length; count++)
+                        {
+                            html += '<p>' + data.errors[count] + '</p>';
+                        }
+                        html += '</div>';
+                    }
+                    if(data.success){
+                        html = '<div class="alert alert-success">' + data.success + '</div>';
+                        setTimeout(function(){
+                            $('#tabel_penyakit').DataTable().ajax.reload();
+                            $('#confirmModal').modal('hide');
+                        }, 2000);
+                    }
                 }
             })
         });

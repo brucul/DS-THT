@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('trial', 'HomeController@trial');
+Route::post('trial', 'HomeController@create')->name('trial');
+
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');
 Route::get('diagnosa', 'UserController@diagnosa')->name('diagnosa');

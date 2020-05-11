@@ -94,7 +94,7 @@ class UserController extends Controller
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()) {
-            return back()->with('toast_error', $error->errors()->all());
+            return back()->with('toast_error', $error->errors()->first());
         } elseif ($email >=1 ) {
             return back()->with('toast_error', 'Email '.$request->email.' Sudah Digunakan !');
         } else {
@@ -119,7 +119,7 @@ class UserController extends Controller
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()){
-            return back()->with('toast_error', $error->errors()->all());
+            return back()->with('toast_error', $error->errors()->first());
             //return response()->json(['ERROR!' => $error->errors()->all()]);
         } elseif ($request->new_pass != $request->new_pass2) {
             return back()->with('toast_error', 'Password Baru Tidak Cocok !');
@@ -147,7 +147,7 @@ class UserController extends Controller
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()){
-            return back()->with('toast_error', $error->errors()->all());
+            return back()->with('toast_error', $error->errors()->first());
             //return response()->json(['ERROR!' => $error->errors()->all()]);
         } elseif ($request->new_pass != $request->new_pass2) {
             return back()->with('toast_error', 'Password Baru Tidak Cocok !');
