@@ -42,7 +42,7 @@
                                 <label class="control-label col-md-4">Jenis Penyakit : </label>
                                 <div class="col-md-12">
                                     <select class="select2 form-control custom-select" name="jenis" id="jenis" style="width: 100%; height:36px;">
-                                        <option>Pilih Jenis Penyakit . .</option>
+                                        <option value="">Pilih Jenis Penyakit . .</option>
                                         <option value="Telinga">Telinga</option>
                                         <option value="Hidung">Hidung</option>
                                         <option value="Tenggorokan">Tenggorokan</option>
@@ -158,6 +158,9 @@
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
+                            setTimeout(function(){
+                                $('#formModal').modal('hide');
+                            }, 1500);
                             $('#sample_form')[0].reset();
                             $('#tabel_penyakit').DataTable().ajax.reload();
                         }

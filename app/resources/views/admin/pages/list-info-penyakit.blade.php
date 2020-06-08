@@ -17,7 +17,7 @@
         <div class="card" style="max-height: 300px">
             <div class="card-body">
                 <h5 class="card-title">{{ $p->penyakit }}</h5>
-                <p>{{ substr($p->detail,1,200) }}</p>
+                <!--<p>{{ substr($p->detail,1,200) }}</p>-->
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{{ url('admin/info-penyakit/edit') }}/{{ $p->kode_penyakit }}';">Edit</button>

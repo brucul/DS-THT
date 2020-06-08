@@ -44,7 +44,7 @@
 	    					<a href="{{ route('home') }}">HOME</a></li>
 	    				<li class="{{ (request()->is('info-penyakit*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ route('info.home') }}">INFO PENYAKIT</a></li>
-	    				<li class="{{ (request()->is('diagnosa*')) ? 'menu-top-active' : '' }}">
+	    				<li class="{{ (request()->is('diagnosis*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ route('diagnosa') }}">DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('riwayat-diagnosa*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}">RIWAYAT DIAGNOSIS</a></li>
@@ -71,7 +71,7 @@
         	<div class="container">
         		<div class="row">
         			<div class="col-md-12">
-        				&copy; 2014 Yourdomain.com |<a href="" target="_blank"  > Designed by : binarytheme.com</a> 
+        				Sistem Pakar - Diagnosis Penyakit THT | 2020
         			</div>
         		</div>
         	</div>

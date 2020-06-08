@@ -6,19 +6,36 @@
 @endsection
 
 @section('content')
-<button data-toggle="tooltip" data-placement="right" title="Tambah Rule" style="margin-bottom: 10px" type="button" class="btn btn-outline-primary margin-5" name="create_record" id="create_record"><i class="fa fa-plus"></i></button>
-
 <div class="card">
     <div class="card-body">
+        <div class="form-group row">
+            <label class="control-label col-md-3">Penyakit : </label>
+            <div class="col-md-9">
+                <input type="text" name="penyakit" class="form-control" value="{{ $fc->penyakit }}" readonly />
+                <button data-toggle="tooltip" data-placement="right" title="Tambah Rule" style="margin-bottom: 10px; margin-top: 20px" type="button" class="btn btn-outline-primary margin-5" name="create_record" id="create_record"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
         <div class="table-responsive">
-            <table id="tabel_penyakit" class="table table-striped table-bordered">
+            <div class="row">
+                <div class="col-md-9">
+                    @foreach($gejala as $g)
+                    {{$g->gejala}}<br/>
+                    @endforeach
+                </div>
+                <div class="col-md-3">
+                    {{$fc->G1}}<br/>
+                    {{$fc->G2}}<br/>
+                    {{$fc->G3}}<br/>
+                    {{$fc->G4}}<br/>
+                    {{$fc->G5}}<br/>
+                    {{$fc->G6}}<br/>
+                </div>
+            </div>
+            <table id="tabel_rule" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th width="5%">No</th>
-                        <th>Penyakit</th>
-                        <th width="50%">Gejala</th>
-                        <th width="10%">Bobot</th>
-                        <th width="15%">Action</th>
+                        <th>No</th>
+                        <th width="100%">Gejala</th>
                     </tr>
                 </thead>
             </table>
@@ -36,31 +53,10 @@
                         <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label class="control-label col-md-12">Penyakit : </label>
-                                <div class="col-md-12">
-                                    <select name="penyakit" id="penyakit" class="select2 form-control custom-select" style="width: 100%; height:36px;">
-                                        <option>Pilih Penyakit . .</option>
-                                        <optgroup label="Telinga">
-                                            @foreach($p_telinga as $p_tlg)
-                                            <option value="{{ $p_tlg->kode_penyakit }}">{{ $p_tlg->penyakit }}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Hidung">
-                                            @foreach($p_hidung as $p_hdg)
-                                            <option value="{{ $p_hdg->kode_penyakit }}">{{ $p_hdg->penyakit }}</option>
-                                            @endforeach
-                                        </optgroup>
-                                        <optgroup label="Tenggorokan">
-                                            @foreach($p_tenggorokan as $p_tgg)
-                                            <option value="{{ $p_tgg->kode_penyakit }}">{{ $p_tgg->penyakit }}</option>
-                                            @endforeach
-                                        </optgroup>
-                                    </select>
-                                </div>
                                 <label class="control-label col-md-12">Gejala : </label>
                                 <div class="col-md-12">
                                     <select name="gejala" id="gejala" class="select2 form-control custom-select" style="width: 100%; height:36px;">
-                                        <option>Pilih Gejala . .</option>
+                                        <option value="">Pilih Gejala . .</option>
                                         <optgroup label="Umum">
                                             @foreach($g_umum as $g_u)
                                             <option value="{{ $g_u->kode_gejala }}">{{ $g_u->gejala }}</option>
@@ -83,35 +79,14 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                <label class="control-label col-md-12">Bobot : </label>
-                                <div class="col-md-12">
-                                    <input type="text" name="bobot" id="bobot" class="form-control" />
-                                </div>
                             </div>
                             <br />
                             <div class="form-group" align="center">
                                 <input type="hidden" name="action" id="action" />
-                                <input type="hidden" name="hidden_id" id="hidden_id" />
+                                <input type="hidden" name="hidden_id" id="hidden_id" value="{{$fc->penyakit}}" />
                                 <input type="submit" name="action_button" id="action_button" class="btn btn-outline-success" value="Add" />
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="confirmModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title">Confirmation</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" name="ok_button" id="ok_button" class="btn btn-outline-danger">OK</button>
-                        <button type="button" class="btn btn-outline-info" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -139,18 +114,15 @@
             }
         });
 
-        $('#tabel_penyakit').DataTable({
+        $('#tabel_rule').DataTable({
             processing: true,
             serverSide: true,
             ajax:{
-                url: "{{ route('admin.rules') }}",
+                url: "{{ route('admin.ds-rules') }}",
             },
             columns:[
             { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            { data: 'penyakit', name: 'penyakit' },
-            { data: 'gejala', name: 'gejala' },
-            { data: 'bobot', name: 'bobot' },
-            { data: 'action', name: 'action', orderable: false }
+            { data: 'gejala', name: 'gejala' }
             ]
         });
 
@@ -160,28 +132,14 @@
             $('#action').val("Add");
             $('#formModal').modal('show');
             $('#sample_form').trigger("reset");
-        });
-
-        $(document).on('click', '.edit', function(){
-            var id = $(this).attr('id');
             $('#form_result').html('');
-            $.get("{{ url('/admin/rules') }}" +'/' + id +'/edit', function (html) {
-                $('#penyakit').val(html.data.penyakit);
-                $('#gejala').val(html.data.gejala);
-                $('#bobot').val(html.data.bobot);
-                $('#hidden_id').val(html.data.id);
-                $('.modal-title').text("Edit Penyakit");
-                $('#action_button').val("Edit");
-                $('#action').val("Edit");
-                $('#formModal').modal('show');
-            })
         });
 
         $('#sample_form').on('submit', function(event){
             event.preventDefault();
             if($('#action').val() == 'Add'){
                 $.ajax({
-                    url:"{{ route('admin.rules.store') }}",
+                    url:"{{ route('admin.fc-rules.update') }}",
                     method:"POST",
                     data: new FormData(this),
                     contentType: false,
@@ -199,44 +157,15 @@
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
-                            $('#sample_form')[0].reset();
-                            $('#tabel_penyakit').DataTable().ajax.reload();
-                        }
-                        $('#form_result').html(html);
-                    }
-                })
-            }
-
-            if($('#action').val() == "Edit"){
-                $.ajax({
-                    url:"{{ route('admin.rules.update') }}",
-                    method:"POST",
-                    data:new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType:"json",
-                    success:function(data){
-                        var html = '';
-                        if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++)
-                            {
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
-                        }
-                        if(data.success){
-                            html = '<div class="alert alert-success">' + data.success + '</div>';
                             setTimeout(function(){
                                 $('#formModal').modal('hide');
                             }, 1500);
                             $('#sample_form')[0].reset();
-                            $('#tabel_penyakit').DataTable().ajax.reload();
+                            $('#tabel_rule').DataTable().ajax.reload();
                         }
                         $('#form_result').html(html);
                     }
-                });
+                })
             }
         });
 
@@ -251,14 +180,14 @@
 
         $('#ok_button').click(function(){
             $.ajax({
-                url:"data-penyakit/destroy/"+id,
+                url:"ds-rules/destroy/"+id,
                 beforeSend:function(){
                     $('#ok_button').text('Deleting...');
                 },
                 success:function(data)
                 {
                     setTimeout(function(){
-                        $('#tabel_penyakit').DataTable().ajax.reload();
+                        $('#tabel_rule').DataTable().ajax.reload();
                         $('#confirmModal').modal('hide');
                     }, 2000);
                 }

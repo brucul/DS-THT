@@ -13,10 +13,10 @@ class CreateRulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rules', function (Blueprint $table) {
+        Schema::create('ds_rules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_gejala');
             $table->string('id_penyakit');
+            $table->string('id_gejala');
             $table->float('bobot');
             $table->softDeletes();
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateRulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rules');
+        Schema::dropIfExists('ds_rules');
     }
 }

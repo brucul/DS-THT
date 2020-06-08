@@ -41,7 +41,7 @@
             <div class="auth-box bg-dark border-top border-secondary">
                 <div>
                     <div class="text-center p-t-20 p-b-20">
-                        <h3 class="db" style="color: white">Register | Sistem Pakar</h3>
+                        <span class="db"><img src="{{ asset('public/admin/assets/images/logo.png') }}" alt="logo" /></span>
                     </div>
                     <!-- Form -->
                     <form class="form-horizontal m-t-20" method="POST" action="{{ route('register') }}">

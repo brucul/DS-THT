@@ -53,7 +53,7 @@ class RulesController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.pages.rule', [
+        return view('admin.pages.ds-rule', [
             'p_telinga' => $p_telinga,
             'p_hidung' => $p_hidung,
             'p_tenggorokan' => $p_tenggorokan,
@@ -67,7 +67,7 @@ class RulesController extends Controller
     public function ShowPenyakit()
     {
         $penyakit = Penyakit::all();
-        return view('admin.pages.rule', ['penyakit' => $penyakit]);
+        return view('admin.pages.ds-rule', ['penyakit' => $penyakit]);
     }
 
     /**
@@ -91,7 +91,7 @@ class RulesController extends Controller
         $rules = array(
             'penyakit' => 'required',
             'gejala' => 'required',
-            'bobot' => 'required',
+            'bobot' => 'required|numeric',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -151,7 +151,7 @@ class RulesController extends Controller
         $rules = array(
             'penyakit' => 'required',
             'gejala' => 'required',
-            'bobot' => 'required',
+            'bobot' => 'required|numeric',
         );
 
         $error = Validator::make($request->all(), $rules);

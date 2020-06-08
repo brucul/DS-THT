@@ -15,12 +15,12 @@
     @endif
     @foreach($penyakit as $p)
     <div class="col-md-4 col-sm-4">
-        <div class="panel panel-info" style="max-height: 300px">
+        <div class="panel panel-custom" style="max-height: 300px">
             <div class="panel-heading">
-                {{ $p->kode }}
+                {{ $p->penyakit }}
             </div>
             <div class="panel-body">
-                <p>{{ substr($p->detail,1,200) }}</p>
+                <!--<p>{{ substr($p->detail,1,200) }}</p>-->
             </div>
             <div class="panel-footer">
                 <a href="{{ url('info-penyakit/detail') }}/{{ $p->kode }}" style="text-decoration: none">Read More . .</a>

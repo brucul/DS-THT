@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
   
 use Closure;
+use Alert;
    
 class IsAdmin
 {
@@ -17,8 +18,8 @@ class IsAdmin
     {
         if(auth()->user()->is_admin == 1){
             return $next($request);
+        } else {
+            return back()->with('toast_error', auth()->user()->name.' tidak memiliki akses admin !!');
         }
-   
-        return redirect('home')->with('error',"You don't have admin access !!");
     }
 }

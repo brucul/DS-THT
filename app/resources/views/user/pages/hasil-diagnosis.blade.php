@@ -12,7 +12,7 @@
                     </div>
                     <div class="panel-body">
                         @foreach ($ev as $key => $value)
-                        {{ $value->name }}<br/>
+                        <i class="fa fa-check"></i> {{ $value->gejala }}<br/>
                         @endforeach
                     </div>
                 </div>
@@ -29,9 +29,11 @@
                         Hasil Akhir
                     </div>
                     <div class="panel-body">
-                        Terdeteksi penyakit @php echo $penyakit; @endphp dengan derajat kepercayaan @php echo $rate."%"; @endphp
+                        Terdeteksi penyakit <b>@php echo $penyakit; @endphp</b> dengan derajat kepercayaan <b>@php echo $rate."%"; @endphp</b>
                     </div>
                 </div>
+                <a class="btn btn-outline-success" href="{{ route('diagnosa') }}">Kembali</a>
+                <a class="btn btn-outline-success" href="{{ url('info-penyakit/detail') }}/{{ $kode_penyakit }}">Tentang Penyakit @php echo $penyakit; @endphp</a>
             </div>
         </div>
     </div>

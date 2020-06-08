@@ -17,6 +17,7 @@ class CreatePasiensTable extends Migration
             $table->bigIncrements('id');
             $table->UnsignedBigInteger('id_user');
             $table->string('nama');
+            $table->date('tgl_lahir');
             $table->set('jk', ['Laki-laki', 'Perempuan']);
             $table->char('no_hp');
             $table->longText('alamat');

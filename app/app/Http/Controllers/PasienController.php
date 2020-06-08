@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Pasien;
 use Validator;
 use DataTables;
+use Carbon\Carbon;
 
 class PasienController extends Controller
 {
@@ -15,11 +16,17 @@ class PasienController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         if(request()->ajax())
         {
-            return datatables()->of(Pasien::all())
+            return datatables()->of(DB::table('pasien')->select('pasien.*', 'penyakit.penyakit')->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')->get())
                     ->addIndexColumn()
                     ->addColumn('action', function($data){
                         $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
@@ -73,7 +80,20 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax())
+        {
+            $data = Pasien::findOrFail($id);
+            $tgl = Carbon::parse($data->tgl_lahir)->format('Y-m-d');
+            $sql="SELECT gejala FROM pasien WHERE id=".$id;
+            $list = DB::select($sql);
+
+            $kode=explode(',', $list[0]->gejala);
+
+            $sql="SELECT gejala FROM gejala WHERE kode_gejala IN ('".implode("','",$kode)."')";
+            $gejala = DB::select($sql);
+
+            return response()->json(['data' => $data, 'tgl' => $tgl, 'gejala' => $gejala]);
+        }
     }
 
     /**
@@ -83,9 +103,33 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $rules = array(
+            'nama'=>  'required',
+            'tanggal'=> 'required|before:today',
+            'jenis_kelamin'=> 'required',
+            'no_hp'=> 'required|numeric',
+            'alamat'=> 'required',
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'nama' =>   $request->nama,
+            'tgl_lahir' => $request->tanggal,
+            'jk' => $request->jenis_kelamin,
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
+        );
+        Pasien::whereId($request->hidden_id)->update($form_data);
+
+        return response()->json(['success' => 'Data is successfully updated']);
     }
 
     /**
@@ -96,6 +140,8 @@ class PasienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Pasien::findOrFail($id);
+        $data->delete();
+        return response()->json(['success' => 'Data is successfully deleted']);
     }
 }

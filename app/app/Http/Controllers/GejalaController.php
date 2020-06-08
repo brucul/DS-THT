@@ -67,7 +67,7 @@ class GejalaController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => $error->errors()->first()]);
+            return response()->json(['errors' => $error->errors()->all()]);
         } else {
             $form_data = array(
                 'kode_gejala' => 'G'.$kode_gejala,
@@ -123,7 +123,7 @@ class GejalaController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => $error->errors()->first()]);
+            return response()->json(['errors' => $error->errors()->all()]);
         }
 
         $form_data = array(

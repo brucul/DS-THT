@@ -87,7 +87,7 @@ class UserController extends Controller
         $email = DB::table('users')->where([['id', '!=', $id], ['email', '=', $request->email]])->count();
 
         $rules = array(
-            'nama' =>  'required|min:5|max|100',
+            'nama' =>  'required|alpha|max:100',
             'email' => 'required|email|min:10',
         );
 
@@ -195,7 +195,8 @@ class UserController extends Controller
         $id_user = Crypt::decrypt($id);
         $riwayat = DB::table('pasien')
                     ->join('users', 'pasien.id_user', '=', 'users.id')
-                    ->select('pasien.*', 'users.*')
+                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->select('pasien.*', 'users.*', 'penyakit.penyakit')
                     ->where('id_user', $id_user)
                     ->get();
         return view('user.pages.riwayat-diagnosa', ['riwayat'=>$riwayat]);
@@ -210,7 +211,11 @@ class UserController extends Controller
 
     public function info()
     {
-        $penyakit = InfoPenyakit::where('detail', '!=', '')->get();
+        $penyakit = DB::table('info_penyakit')
+                    ->join('penyakit', 'penyakit.kode_penyakit', '=', 'info_penyakit.kode')
+                    ->select('penyakit.*', 'info_penyakit.*')
+                    //->where('info_penyakit.detail', '!=', '')
+                    ->get();
         $info = count($penyakit);
         return view('user.pages.info-penyakit', (['penyakit' => $penyakit, 'info' => $info]));
     }

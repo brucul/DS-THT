@@ -37,6 +37,13 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
+    @include('sweetalert::alert')
+    @if (Session::has('toast_error'))
+        <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
+        <script>
+            Swal.fire({!! Session::pull('toast_error') !!})
+        </script>
+    @endif
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
             <div class="auth-box bg-dark border-top border-secondary">
                 <div id="loginform">
@@ -77,7 +84,7 @@
                                 <div class="form-group">
                                     <div class="p-t-20">
                                         <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                        <button class="btn btn-success float-right" type="submit">Login</button>
+                                        <button class="btn btn-success float-right" type="submit">Sign In</button>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +108,7 @@
                             <!-- pwd -->
                             <div class="row m-t-20 p-t-20 border-top border-secondary">
                                 <div class="col-12">
-                                    <a class="btn btn-success" href="#" id="to-login" name="action">Back To Login</a>
+                                    <a class="btn btn-success" href="#" id="to-login" name="action">Back</a>
                                     <button class="btn btn-info float-right" type="button" name="action">Send</button>
                                 </div>
                             </div>

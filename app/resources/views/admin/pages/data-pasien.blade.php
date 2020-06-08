@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<button data-toggle="tooltip" data-placement="right" title="Tambah Gejala" style="margin-bottom: 10px" type="button" class="btn btn-outline-primary margin-5" onclick="window.open('{{ route('diagnosa') }}', '_blank')"><i class="fa fa-plus"></i></button>
+<button data-toggle="tooltip" data-placement="right" title="Tambah Pasien" style="margin-bottom: 10px" type="button" class="btn btn-outline-primary margin-5" onclick="window.open('{{ route('diagnosa') }}', '_blank')"><i class="fa fa-plus"></i></button>
 
 <div class="card">
     <div class="card-body">
@@ -16,10 +16,11 @@
                     <tr>
                         <th width="5%">No</th>
                         <th>Nama</th>
+                        <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
                         <th>No. HP</th>
                         <th>Alamat</th>
-                        <th>Hasil Diagnosa</th>
+                        <th>Hasil Diagnosis</th>
                         <th width="15%">Action</th>
                     </tr>
                 </thead>
@@ -38,19 +39,46 @@
                         <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
+                                <label class="control-label col-md-4">Nama : </label>
+                                <div class="col-md-12">
+                                    <input type="text" name="nama" id="nama" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Tanggal Lahir : </label>
+                                <div class="col-md-12">
+                                    <input type="date" name="tanggal" id="tanggal" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Jenis Kelamin :</label>
+                                <div class="col-md-12">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="customControlValidation1" name="jenis_kelamin" value="Laki-laki" required>
+                                        <label class="custom-control-label" for="customControlValidation1">Laki-laki</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" id="customControlValidation2" name="jenis_kelamin" value="Perempuan" required>
+                                        <label class="custom-control-label" for="customControlValidation2">Perempuan</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">No. HP : </label>
+                                <div class="col-md-12">
+                                    <input type="text" name="no_hp" id="no_hp" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Alamat : </label>
+                                <div class="col-md-12">
+                                    <textarea name="alamat" id="alamat" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-md-4">Gejala : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="gejala" id="gejala" class="form-control" />
-                                </div>
-                                <label class="control-label col-md-4">Jenis Gejala : </label>
-                                <div class="col-md-12">
-                                    <select class="select2 form-control custom-select" name="jenis" id="jenis" style="width: 100%; height:36px;">
-                                        <option>Pilih Jenis Gejala . .</option>
-                                        <option value="Umum">Umum</option>
-                                        <option value="Telinga">Telinga</option>
-                                        <option value="Hidung">Hidung</option>
-                                        <option value="Tenggorokan">Tenggorokan</option>
-                                    </select>
+                                    <textarea name="gejala" id="gejala" class="form-control"></textarea>
                                 </div>
                             </div>
                             <br />
@@ -113,31 +141,27 @@
             columns:[
             { data: 'DT_RowIndex', name: 'DT_RowIndex'},
             { data: 'nama', name: 'nama' },
-            { data: 'jk', name: 'jk' },
+            { data: 'tgl_lahir', name: 'tgl_lahir' },
+            { data: 'jk', name: 'jenis_kelamin' },
             { data: 'no_hp', name: 'no_hp' },
             { data: 'alamat', name: 'alamat' },
-            { data: 'diagnosis', name: 'diagnosis' },
+            { data: 'penyakit', name: 'penyakit' },
             { data: 'action', name: 'action', orderable: false }
             ]
-        });
-
-        $('#create_record').click(function(){
-            $('#form_result').html('');
-            $('.modal-title').text("Tambah Gejala");
-            $('#action_button').val("Add");
-            $('#action').val("Add");
-            $('#formModal').modal('show');
-            $('#sample_form').trigger("reset");
         });
 
         $(document).on('click', '.edit', function(){
             var id = $(this).attr('id');
             $('#form_result').html('');
-            $.get("{{ url('/admin/data-gejala') }}" +'/' + id +'/edit', function (html) {
-                $('#gejala').val(html.data.gejala);
-                $('#jenis').val(html.data.jenis);
+            $.get("{{ url('/admin/data-pasien') }}" +'/' + id +'/edit', function (html) {
+                $('#nama').val(html.data.nama);
+                $('#tanggal').val(html.tgl);
+                //$('#jenis_kelamin [value="'+data.jk+'"]').prop('checked', true);
+                $('[name="jenis_kelamin"][value="'+html.data.jk+'"]').prop('checked', true);
+                $('#no_hp').val(html.data.no_hp);
+                $('#alamat').val(html.data.alamat);
                 $('#hidden_id').val(html.data.id);
-                $('.modal-title').text("Edit Gejala");
+                $('.modal-title').text("Edit Data Pasien");
                 $('#action_button').val("Edit");
                 $('#action').val("Edit");
                 $('#formModal').modal('show');
@@ -146,37 +170,9 @@
 
         $('#sample_form').on('submit', function(event){
             event.preventDefault();
-            if($('#action').val() == 'Add'){
-                $.ajax({
-                    url:"{{ route('admin.gejala.store') }}",
-                    method:"POST",
-                    data: new FormData(this),
-                    contentType: false,
-                    cache:false,
-                    processData: false,
-                    dataType:"json",
-                    success:function(data){
-                        var html = '';
-                        if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++){
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
-                        }
-                        if(data.success){
-                            html = '<div class="alert alert-success">' + data.success + '</div>';
-                            $('#sample_form')[0].reset();
-                            $('#tabel_pasien').DataTable().ajax.reload();
-                        }
-                        $('#form_result').html(html);
-                    }
-                })
-            }
-
             if($('#action').val() == "Edit"){
                 $.ajax({
-                    url:"{{ route('admin.gejala.update') }}",
+                    url:"{{ route('admin.pasien.update') }}",
                     method:"POST",
                     data:new FormData(this),
                     contentType: false,
@@ -218,7 +214,7 @@
 
         $('#ok_button').click(function(){
             $.ajax({
-                url:"data-gejala/destroy/"+id,
+                url:"data-pasien/destroy/"+id,
                 beforeSend:function(){
                     $('#ok_button').text('Deleting...');
                 },
@@ -227,7 +223,7 @@
                     setTimeout(function(){
                         $('#tabel_pasien').DataTable().ajax.reload();
                         $('#confirmModal').modal('hide');
-                    }, 2000);
+                    }, 1500);
                 }
             })
         });

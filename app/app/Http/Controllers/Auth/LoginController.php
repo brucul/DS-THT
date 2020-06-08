@@ -46,7 +46,7 @@ class LoginController extends Controller
    
         $this->validate($request, [
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ]);
 
         //$login_type = filter_var($email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -60,7 +60,7 @@ class LoginController extends Controller
             }
         }else{
             return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+                ->with('toast_error','Email-Address And Password Are Wrong.');
         }
           
     }

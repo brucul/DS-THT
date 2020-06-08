@@ -5,12 +5,6 @@
 @endsection
 
 @section('content')
-@if (Session::has('success'))
-    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
-    <script>
-        Swal.fire({!! Session::pull('success') !!});
-    </script>
-@endif
 </br></br>
 <div class="row">
     <div class="col-md-4">

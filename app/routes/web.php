@@ -17,12 +17,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('trial', 'HomeController@trial');
-Route::post('trial', 'HomeController@create')->name('trial');
+Route::get('trial/{id}', 'HomeController@trial');
 
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');
-Route::get('diagnosa', 'UserController@diagnosa')->name('diagnosa');
+Route::get('diagnosis', 'UserController@diagnosa')->name('diagnosa');
+Route::post('diagnosis/hasil-diagnosis', 'DSController@diagnosis')->name('hasil-diagnosis');
+//Route::post('diagnosis/hasil-diagnosis/{id}/gejala', 'DSController@show')->name('gejala-diagnosis');
 Route::get('profil/{id}', 'UserController@profil')->name('profil');
 Route::post('profil/update-profil', 'UserController@update_profil')->name('update.profil');
 Route::post('profil/update-pass', 'UserController@update_pass')->name('update.pass');
@@ -55,13 +56,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.']
 	
 	//pasien
 	Route::get('data-pasien', 'PasienController@index')->name('pasien');
+	Route::get('data-pasien/{id}/edit', 'PasienController@edit')->name('pasien.edit');
+	Route::post('data-pasien/update', 'PasienController@update')->name('pasien.update');
+	Route::get('data-pasien/destroy/{id}', 'PasienController@destroy')->name('pasien.delete');
 	
-	//rule
-	Route::get('rules', 'RulesController@index')->name('rules');
-	Route::post('rules/store', 'RulesController@store')->name('rules.store');
-	Route::get('rules/{id}/edit', 'RulesController@edit')->name('rules.edit');
-	Route::post('rules/update', 'RulesController@update')->name('rules.update');
-	Route::get('rules/destroy/{id}', 'RulesController@destroy')->name('rules.delete');
+	//DS
+	Route::get('ds-rules', 'DSController@index')->name('ds-rules');
+	Route::post('ds-rules/store', 'DSController@store')->name('ds-rules.store');
+	Route::get('ds-rules/{id}/edit', 'DSController@edit')->name('ds-rules.edit');
+	Route::post('ds-rules/update', 'DSController@update')->name('ds-rules.update');
+	Route::get('ds-rules/destroy/{id}', 'DSController@destroy')->name('ds-rules.delete');
+
+	//FC
+	Route::get('fc-rules', 'FCController@index')->name('fc-rules');
+	Route::get('fc-rules/{id}/tambah-rule', 'FCController@edit')->name('tambah-fc-rules');
+	Route::post('fc-rules/update', 'FCController@update')->name('fc-rules.update');
 
 	//users
 	Route::get('users-account', 'UserController@index')->name('users.account');

@@ -56,9 +56,19 @@ class HomeController extends Controller
         return view('admin.pages.home', ['telinga' => $telinga, 'hidung' => $hidung, 'tenggorokan' => $tenggorokan]);
     }
     
-    public function trial(){
-        $evidence = DB::table('ds_evidences')->get();
-        return view('user.pages.trial', ['evidences'=>$evidence]);
+    public function trial($id){
+        $sql="SELECT gejala FROM pasien WHERE id=".$id;
+        $list = DB::select($sql);
+
+        $kode=explode(',', $list[0]->gejala);
+
+        $sql="SELECT gejala FROM gejala WHERE kode_gejala IN ('".implode("','",$kode)."')";
+        $list = DB::select($sql);
+
+        foreach ($list as $key => $value) {
+            echo $value->gejala;
+            echo "<br/>";
+        }
     }
 
     /**
@@ -78,23 +88,23 @@ class HomeController extends Controller
                     ->whereIn('ds_rules.id_evidence', [implode(',',$request->evidence)])
                     ->groupBy('ds_rules.id_evidence')
                     ->get();*/
-                $sql = "SELECT GROUP_CONCAT(b.code) AS code, a.cf
+                $sql = "SELECT GROUP_CONCAT(b.penyakit) AS code, a.bobot
                         FROM ds_rules a
-                        JOIN ds_problems b ON a.id_problem=b.id
-                        WHERE a.id_evidence IN(".implode(',',$request->evidence).")
-                        GROUP BY a.id_evidence";
+                        JOIN penyakit b ON a.id_penyakit=b.kode_penyakit
+                        WHERE a.id_gejala IN('".implode("','",$request->evidence)."')
+                        GROUP BY a.id_gejala";
                 $list = DB::select($sql, []);
                 //mengubah ke array multidimensional
                 $evidence = json_decode(json_encode($list), true);
                 //mengubah array key
                 foreach ( $evidence as $k=>$v ) {
                     $evidence[$k] [0] = $evidence[$k] ['code'];
-                    $evidence[$k] [1] = $evidence[$k] ['cf'];
+                    $evidence[$k] [1] = $evidence[$k] ['bobot'];
                     unset($evidence[$k]['code']);
-                    unset($evidence[$k]['cf']);
+                    unset($evidence[$k]['bobot']);
                 }
                 //--- menentukan environement
-                $sql="SELECT GROUP_CONCAT(code) AS code FROM ds_problems";
+                $sql="SELECT GROUP_CONCAT(penyakit) AS code FROM penyakit";
                 $list = DB::select($sql);
                 //mengubah ke array multidimensional
                 $listArr = json_decode(json_encode($list), true);
@@ -168,7 +178,7 @@ class HomeController extends Controller
                 //echo "<br/>== HASIL AKHIR ==<br/>";
                 $codes=array_keys($densitas_baru); 
                 $final_codes=explode(',',$codes[0]);
-                $sql="SELECT GROUP_CONCAT(name) AS name FROM ds_problems WHERE code IN('".implode("','",$final_codes)."')"; 
+                $sql="SELECT GROUP_CONCAT(penyakit) AS name FROM penyakit WHERE penyakit IN('".implode("','",$final_codes)."')"; 
                 $list = DB::select($sql);
                 $row = json_decode(json_encode($list), true);
                 //mengubah array key
@@ -177,7 +187,7 @@ class HomeController extends Controller
                     unset($row[$k]['name']);
                 }
                 //echo "Terdeteksi penyakit <b>{$row[0][0]}</b> dengan derajat kepercayaan ".round($densitas_baru[$codes[0]]*100,2)."%";
-                $sql="SELECT name FROM ds_evidences WHERE id IN('".implode("','",$request->evidence)."')"; 
+                $sql="SELECT gejala FROM gejala WHERE kode_gejala IN('".implode("','",$request->evidence)."')"; 
                 $gejala = DB::select($sql);
                 return view('user.pages.hasil-diagnosis',['list'=>$list_densitas, 'ranking'=>$perangkingan, 'penyakit'=>$row[0][0], 'rate'=>round($densitas_baru[$codes[0]]*100,2), 'ev'=>$gejala]);
             }
