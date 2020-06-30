@@ -18,6 +18,10 @@ class UsersTableSeeder extends Seeder
             'email' => 'afrizaf3@gmail.com',
             'password' => Hash::make('425425af'),
             'is_admin' => 1,
+            'tgl_lahir' => '1998-04-14',
+            'jk' => 'Laki-laki',
+            'no_hp' => '085741336588',
+            'alamat' => 'Tegal',
         ]);
     }
 }

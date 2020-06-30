@@ -8,6 +8,7 @@ use App\Gejala;
 use Validator;
 use DataTables;
 use Alert;
+use Illuminate\Validation\Rule;
 
 class GejalaController extends Controller
 {
@@ -59,7 +60,7 @@ class GejalaController extends Controller
     {
         $kode_gejala = DB::table('gejala')->count('kode_gejala')+1;
         $rules = array(
-            'gejala' =>  'required',
+            'gejala' =>  'required|unique:gejala,gejala',
             'jenis' => 'required',
         );
 
@@ -115,24 +116,23 @@ class GejalaController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'gejala'     =>  'required',
+            'gejala'     =>  ['required',Rule::unique('gejala')->ignore($request->hidden_id)],
             'jenis'=> 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
 
-        if($error->fails())
-        {
+        if($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
+        } else {
+            $form_data = array(
+                'gejala'     =>   $request->gejala,
+                'jenis' => $request->jenis,
+            );
+            Gejala::whereId($request->hidden_id)->update($form_data);
+
+            return response()->json(['success' => 'Data is successfully updated']);
         }
-
-        $form_data = array(
-            'gejala'     =>   $request->gejala,
-            'jenis' => $request->jenis,
-        );
-        Gejala::whereId($request->hidden_id)->update($form_data);
-
-        return response()->json(['success' => 'Data is successfully updated']);
     }
 
     /**

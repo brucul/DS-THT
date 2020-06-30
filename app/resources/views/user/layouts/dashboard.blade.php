@@ -21,6 +21,8 @@
         <!-- DATATABLES -->
           <link href="{{ asset('public/user/assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
 
+          <link rel="stylesheet" type="text/css" href="{{ asset('public/user/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+
     </head>
     <body>
     	<div class="top-container">
@@ -36,16 +38,16 @@
         @php
             $id = Crypt::encrypt(Auth::user()->id);
         @endphp
-    	<div class="menu-top" id="myHeader" style="z-index: 1;">
+    	<div class="menu-top" id="myHeader" style="z-index: 10;">
     		<div class="container">
 	    		<div class="navbar-collapse collapse">
 	    			<ul id="top-menu" class="nav navbar-nav navbar-right">
+	    				<!--<li class="{{ (request()->is('home*')) ? 'menu-top-active' : '' }}">
+	    					<a href="{{ route('home') }}">HOME</a></li>-->
 	    				<li class="{{ (request()->is('home*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ route('home') }}">HOME</a></li>
-	    				<li class="{{ (request()->is('info-penyakit*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ route('info.home') }}">INFO PENYAKIT</a></li>
+	    					<a href="{{ route('home') }}">Home</a></li>
 	    				<li class="{{ (request()->is('diagnosis*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ route('diagnosa') }}">DIAGNOSIS</a></li>
+	    					<a href="{{ url('diagnosis') }}/{{ $id }}">DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('riwayat-diagnosa*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}">RIWAYAT DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('profil*')) ? 'menu-top-active' : '' }}">
@@ -61,6 +63,11 @@
     				<div class="col-md-12">
     					<h4 class="header-line">HALO {{@Auth::user()->name}} ,</h4>
     				</div>
+                    @if(@Auth::user()->tgl_lahir==null || @Auth::user()->jk==null || @Auth::user()->no_hp==null || @Auth::user()->alamat==null)
+                    <div class="col-md-12 alert alert-danger">
+                        Profil anda belum lengkap, untuk bisa melakukan diagnosis silakan lengkapi profil anda <a href="{{ url('profil') }}/{{ $id }}" class="alert-link">di sini</a>.
+                    </div>
+                    @endif
     			</div>
                 @include('sweetalert::alert')
     			@yield('content')
@@ -87,6 +94,9 @@
         <!-- DATATABLE SCRIPTS  -->
         <script src="{{ asset('public/user/assets/js/dataTables/jquery.dataTables.js') }}"></script>
         <script src="{{ asset('public/user/assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+        <script src="{{ asset('public/user/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+        @yield('js')
+        
         <script>
         	window.onscroll = function() {myFunction()};
 
@@ -99,7 +109,40 @@
         		} else {
         			header.classList.remove("sticky");
         		}
-        	}
+        	};
+
+            jQuery('#datepicker-autoclose').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.angkaSaja').keypress(function(event) {
+                    var charCode = (event.which) ? event.which : event.keyCode
+                    if (charCode >= 48 && charCode <=57)
+                        return true;
+                    return false;
+                });
+                $('.hurufSpesial').keypress(function(event) {
+                    var charCode = (event.which) ? event.which : event.keyCode
+                    if ((charCode >= 65 && charCode <= 127)||(charCode >= 32 && charCode <= 47))
+                        return true;
+                    return false;
+                });
+                $('.hurufSaja').keypress(function(event) {
+                    var charCode = (event.which) ? event.which : event.keyCode
+                    if ((charCode >= 65 && charCode <= 90)||(charCode >= 97 && charCode <= 122)||charCode == 32)
+                        return true;
+                    return false;
+                });
+                $('.tanggal').keypress(function(event) {
+                    var charCode = (event.which) ? event.which : event.keyCode
+                    if (charCode >= 48 && charCode <=57 || charCode == 47)
+                        return true;
+                    return false;
+                });
+            });
         </script>
     </body>
 </html>

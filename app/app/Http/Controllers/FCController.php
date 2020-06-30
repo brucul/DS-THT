@@ -41,7 +41,6 @@ class FCController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<a class="edit btn btn-outline-warning btn-sm" href="'.url('admin/fc-rules/'.$data->id.'/tambah-rule').'">Edit</a>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -102,18 +101,14 @@ class FCController extends Controller
      */
     public function edit($id)
     {
-        $g_hidung = DB::table('gejala')->where([['jenis', 'Hidung'],['deleted_at', null]])->get();
-        $g_telinga = DB::table('gejala')->where([['jenis', 'Telinga'],['deleted_at', null]])->get();
-        $g_tenggorokan = DB::table('gejala')->where([['jenis', 'Tenggorokan'],['deleted_at', null]])->get();
-        $g_umum = DB::table('gejala')->where([['jenis', 'Umum'],['deleted_at', null]])->get();
-        $fc = ForwardChaining::findOrFail($id);
+        $fc = DB::table('fc_rules')
+                ->where('fc_rules.id', $id)
+                ->join('penyakit', 'fc_rules.penyakit', '=', 'penyakit.kode_penyakit')
+                ->select('fc_rules.*', 'penyakit.*')
+                ->first();
         $gejala=Gejala::all();
         return view('admin.pages.form-fc-rule', [
             'fc'=>$fc,
-            'g_telinga' => $g_telinga,
-            'g_hidung' => $g_hidung,
-            'g_tenggorokan' => $g_tenggorokan,
-            'g_umum' => $g_umum,
             'gejala' => $gejala,
         ]);
     }
@@ -127,9 +122,8 @@ class FCController extends Controller
      */
     public function update(Request $request)
     {
-        DB::table('fc_rules')->where('penyakit',$request->hidden_id)->update([$request->gejala=>1]);
-        
-        return response()->json(['success' => 'Data is successfully updated']);
+        DB::table('fc_rules')->where('penyakit' ,$request->penyakit)->update([$request->kode => $request->value]);
+        return back()->with('toast_success', 'Berhasil Diubah');
     }
 
     /**

@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon 
+    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/admin/assets/images/favicon.png') }}">
-    -->
+    
     <title>Sistem Pakar</title>
     <!-- Custom CSS -->
     <link href="{{ asset('public/admin/assets/libs/flot/css/float-chart.css') }}" rel="stylesheet">
@@ -57,9 +57,9 @@
                             <div class="col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-email"></i></span>
+                                        <span class="input-group-text bg-success text-white" id="basic-addon1" data-toggle="tooltip" title="Masukkan email anda !"><i class="ti-email"></i></span>
                                     </div>
-                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus aria-describedby="basic-addon1" placeholder="Email" style="border: none;">
+                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus aria-describedby="basic-addon1" placeholder="Email" style="border: none;" autocomplete="false">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -68,9 +68,9 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-lock"></i></span>
+                                        <span class="input-group-text bg-warning text-white" id="basic-addon2" data-toggle="tooltip" title="Masukkan password anda !"><i class="ti-lock"></i></span>
                                     </div>
-                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" style="border: none;">
+                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" style="border: none;" autocomplete="false">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -83,7 +83,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <div class="p-t-20">
-                                        <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
+                                        <!--<button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>-->
                                         <button class="btn btn-success float-right" type="submit">Sign In</button>
                                     </div>
                                 </div>

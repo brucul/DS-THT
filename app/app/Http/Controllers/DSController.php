@@ -191,11 +191,6 @@ class DSController extends Controller
             $gejala = DB::select($sql);
             $form_data = array(
                 'id_user' => auth()->user()->id,
-                'nama' => $request->nama,
-                'tgl_lahir' => $request->tanggal,
-                'jk' => $request->jenis_kelamin,
-                'no_hp' => $request->no_hp,
-                'alamat' => $request->alamat,
                 'diagnosis' => $row[0]['kode_penyakit'],
                 'prosentase' => round($densitas_baru[$codes[0]]*100,2),
                 'gejala' => implode(',',$request->evidence),

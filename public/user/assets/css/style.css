@@ -18,8 +18,9 @@
 
    body {
     /*background: url(../img/bg3.jpg) no-repeat;
-    background-size: 100% 100%;*/
-    background-color: grey;
+    background-size: 100% 100%;
+    background-color: grey;*/
+    background-color: #f7f7f7;
     font-family: 'Open Sans', sans-serif;
     line-height:28px;
 
@@ -237,7 +238,8 @@
 }
 
 .top-container {
-    background: url(../img/3.jpg) no-repeat top center/cover;
+    /*background: url(../img/3.jpg) no-repeat top center/cover;*/
+    background-color: #b5b5b5;
     padding: 30px;
 }
 

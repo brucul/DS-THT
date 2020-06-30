@@ -60,7 +60,20 @@
                         <div class="banner-content text-center">
                             <p class="text-uppercase text-white">Selamat Datang</p>
                             <h2 class="text-uppercase text-white">SISTEM PAKAR DIAGNOSIS PENYAKIT THT</h2>
-                            <a href="{{ route('diagnosa') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                            @if (Route::has('login'))
+                                <div class="top-right links">
+                                    @auth
+                                        @if (Auth::user()->is_admin != 1)
+                                        @php $id = Crypt::encrypt(Auth::user()->id); @endphp
+                                            <a href="{{ url('diagnosis') }}/{{$id}}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                                        @else
+                                            <a href="{{ route('admin.home') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                                        @endif
+                                    @else
+                                        <a href="{{ route('login') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                                    @endauth
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

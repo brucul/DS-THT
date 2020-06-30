@@ -3,11 +3,10 @@
 @section('css')
 <link href="{{ asset('public/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/admin/assets/libs/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 @endsection
 
 @section('content')
-<button data-toggle="tooltip" data-placement="right" title="Tambah Pasien" style="margin-bottom: 10px" type="button" class="btn btn-outline-primary margin-5" onclick="window.open('{{ route('diagnosa') }}', '_blank')"><i class="fa fa-plus"></i></button>
-
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
@@ -41,13 +40,16 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Nama : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="nama" id="nama" class="form-control" />
+                                    <input type="text" name="nama" id="nama" class="form-control hurufSaja" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4">Tanggal Lahir : </label>
-                                <div class="col-md-12">
-                                    <input type="date" name="tanggal" id="tanggal" class="form-control" />
+                                <div class="input-group col-md-12">
+                                    <input type="text" name="tanggal" class="form-control tanggal" id="tanggal" placeholder="mm/dd/yyyy" autocomplete="false">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -66,19 +68,13 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">No. HP : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="no_hp" id="no_hp" class="form-control" />
+                                    <input type="text" name="no_hp" id="no_hp" class="form-control angkaSaja" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4">Alamat : </label>
                                 <div class="col-md-12">
                                     <textarea name="alamat" id="alamat" class="form-control"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Gejala : </label>
-                                <div class="col-md-12">
-                                    <textarea name="gejala" id="gejala" class="form-control"></textarea>
                                 </div>
                             </div>
                             <br />
@@ -117,13 +113,17 @@
 <script src="{{ asset('public/admin/assets/extra-libs/DataTables/datatables.min.js') }}" rel="stylesheet"></script>
 <script src="{{ asset('public/admin/assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('public/admin/assets/libs/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('public/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript">
     //***********************************//
     // For select 2
     //***********************************//
     $(".select2").select2();
-</script>
-<script type="text/javascript">
+    /*datwpicker*/
+        jQuery('#tanggal').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
     $(document).ready(function(){
 
         $.ajaxSetup({
@@ -140,7 +140,7 @@
             },
             columns:[
             { data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            { data: 'nama', name: 'nama' },
+            { data: 'name', name: 'name' },
             { data: 'tgl_lahir', name: 'tgl_lahir' },
             { data: 'jk', name: 'jenis_kelamin' },
             { data: 'no_hp', name: 'no_hp' },
@@ -154,7 +154,7 @@
             var id = $(this).attr('id');
             $('#form_result').html('');
             $.get("{{ url('/admin/data-pasien') }}" +'/' + id +'/edit', function (html) {
-                $('#nama').val(html.data.nama);
+                $('#nama').val(html.data.name);
                 $('#tanggal').val(html.tgl);
                 //$('#jenis_kelamin [value="'+data.jk+'"]').prop('checked', true);
                 $('[name="jenis_kelamin"][value="'+html.data.jk+'"]').prop('checked', true);

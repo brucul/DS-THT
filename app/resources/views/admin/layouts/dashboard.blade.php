@@ -101,6 +101,40 @@
         $('[data-toggle="tooltip"]').tooltip();
         $(".preloader").fadeOut();
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.angkaSaja').keypress(function(event) {
+                var charCode = (event.which) ? event.which : event.keyCode
+                if (charCode >= 48 && charCode <=57)
+                    return true;
+                return false;
+            });
+            $('.hurufSpesial').keypress(function(event) {
+                var charCode = (event.which) ? event.which : event.keyCode
+                if ((charCode >= 65 && charCode <= 127)||(charCode >= 32 && charCode <= 47))
+                    return true;
+                return false;
+            });
+            $('.hurufSaja').keypress(function(event) {
+                var charCode = (event.which) ? event.which : event.keyCode
+                if ((charCode >= 65 && charCode <= 90)||(charCode >= 97 && charCode <= 122)||charCode == 32)
+                    return true;
+                return false;
+            });
+            $('.tanggal').keypress(function(event) {
+                var charCode = (event.which) ? event.which : event.keyCode
+                if (charCode >= 48 && charCode <=57 || charCode == 47)
+                    return true;
+                return false;
+            });
+            $('.bobot').keypress(function(event) {
+                var charCode = (event.which) ? event.which : event.keyCode
+                if (charCode >= 48 && charCode <=57 || charCode == 46)
+                    return true;
+                return false;
+            });
+        });
+    </script>
     @yield('js')
 </body>
 

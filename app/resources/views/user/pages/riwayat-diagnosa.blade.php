@@ -12,12 +12,13 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                             <thead>
                                 <tr>
-                                    <th width="10%">No</th>
+                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Jenis Kelamin</th>
                                     <th>No. HP</th>
                                     <th>Alamat</th>
-                                    <th>Hasil Diagnosa</th>
+                                    <th>Hasil Diagnosis</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -25,11 +26,12 @@
                                 @foreach($riwayat as $r)
                                 <tr>
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $r->nama }}</td>
+                                    <td>{{ $r->name }}</td>
                                     <td>{{ $r->jk }}</td>
                                     <td>{{ $r->no_hp }}</td>
                                     <td>{{ $r->alamat }}</td>
                                     <td>{{ $r->penyakit }} - {{ $r->prosentase }} %</td>
+                                    <td><a href="{{ url('riwayat-diagnosa/detail') }}/{{ $r->id_pasien }}" class="btn btn-outline-success">Detail Diagnosis</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

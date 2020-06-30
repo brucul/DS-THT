@@ -115,6 +115,7 @@
         });
 
         $('#create_record').click(function(){
+            $('#form_result').html('');
             $('.modal-title').text("Tambah Penyakit");
             $('#action_button').val("Add");
             $('#action').val("Add");

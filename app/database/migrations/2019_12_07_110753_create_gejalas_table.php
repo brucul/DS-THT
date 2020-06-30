@@ -16,7 +16,7 @@ class CreateGejalasTable extends Migration
         Schema::create('gejala', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('kode_gejala', 4)->unique();
-            $table->string('gejala');
+            $table->string('gejala')->unique();
             $table->set('jenis', ['Umum', 'Telinga', 'Hidung', 'Tenggorokan']);
             $table->softDeletes();
             $table->timestamps();

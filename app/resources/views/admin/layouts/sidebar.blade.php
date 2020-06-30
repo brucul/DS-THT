@@ -16,7 +16,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-all-inclusive"></i><span class="hide-menu">Rules </span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item"><a href="{{ route('admin.ds-rules') }}" class="sidebar-link"><i class="mdi mdi-vector-circle"></i><span class="hide-menu"> Dempster-Shafer </span></a></li>
-                        <li class="sidebar-item"><a href="{{ route('admin.fc-rules') }}" class="sidebar-link"><i class="mdi mdi-sitemap"></i><span class="hide-menu"> Forward Chaining </span></a></li>
+                        <!-- <li class="sidebar-item"><a href="{{ route('admin.fc-rules') }}" class="sidebar-link"><i class="mdi mdi-sitemap"></i><span class="hide-menu"> Forward Chaining </span></a></li> -->
                     </ul>
                 </li>
             </ul>

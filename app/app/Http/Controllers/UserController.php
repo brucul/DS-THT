@@ -10,7 +10,9 @@ use Validator;
 use App\User;
 use App\Penyakit;
 use App\InfoPenyakit;
+use App\Pasien;
 Use Alert;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -71,7 +73,8 @@ class UserController extends Controller
     {
         $id_user = Crypt::decrypt($id);
         $user = User::findOrFail($id_user);
-        return view('admin.pages.edit-user', ['user'=>$user]);
+        $tgl = Carbon::parse($user->tgl_lahir)->format('m/d/Y');
+        return view('admin.pages.edit-user', ['user'=>$user, 'tgl'=>$tgl]);
     }
 
     /**
@@ -84,26 +87,33 @@ class UserController extends Controller
     public function update_profil(Request $request)
     {
         $id=$request->id;
-        $email = DB::table('users')->where([['id', '!=', $id], ['email', '=', $request->email]])->count();
 
         $rules = array(
             'nama' =>  'required|alpha|max:100',
-            'email' => 'required|email|min:10',
+            'email' => 'required|email|min:10|unique:users,email',
+            //'v_email' => 'unique:users,email_verified_at',
+            'tanggal' => 'required|before:today',
+            'jenis_kelamin' => 'required',
+            'no_hp' => 'required|numeric',
+            'alamat' => 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()) {
             return back()->with('toast_error', $error->errors()->first());
-        } elseif ($email >=1 ) {
-            return back()->with('toast_error', 'Email '.$request->email.' Sudah Digunakan !');
         } else {
             $form_data = array(
                 'name' => $request->nama,
                 'email' => $request->email,
                 'email_verified_at' => $request->v_email,
+                'tgl_lahir' => Carbon::parse($request->tanggal)->format('Y-m-d'),
+                'jk' => $request->jenis_kelamin,
+                'no_hp' => $request->no_hp,
+                'alamat' => $request->alamat,
             );
             User::whereId($id)->update($form_data);
+            //DB::table('pasien')->where('id_user', $id)->update($form_data2);
             return back()->with('toast_success', 'Data Berhasil Diubah !');
         }
     }
@@ -176,13 +186,16 @@ class UserController extends Controller
         //
     }
 
-    public function diagnosa()
+    public function diagnosa($id)
     {
+        $id_user = Crypt::decrypt($id);
+        $user = User::findOrFail($id_user);
         $g_hidung = DB::table('gejala')->where('jenis', '=', 'Hidung')->get();
         $g_telinga = DB::table('gejala')->where('jenis', '=', 'Telinga')->get();
         $g_tenggorokan = DB::table('gejala')->where('jenis', '=', 'Tenggorokan')->get();
         $g_umum = DB::table('gejala')->where('jenis', '=', 'Umum')->get();
         return view('user.pages.diagnosa', [
+            'user' => $user,
             'g_telinga' => $g_telinga, 
             'g_hidung' => $g_hidung, 
             'g_tenggorokan' => $g_tenggorokan,
@@ -202,11 +215,30 @@ class UserController extends Controller
         return view('user.pages.riwayat-diagnosa', ['riwayat'=>$riwayat]);
     }
 
+    public function detailRiwayat($id)
+    {
+        $pasien = DB::table('pasien')
+                ->where('pasien.id_pasien', $id)
+                ->join('users', 'pasien.id_user', '=', 'users.id')
+                ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                ->select('pasien.*', 'penyakit.*', 'users.*')
+                ->first();
+
+        $kode=(explode(',', $pasien->gejala));
+        $kode_gejala = implode("','", $kode);
+
+        $sql="SELECT gejala FROM gejala WHERE kode_gejala IN('".$kode_gejala."')";
+        $gejala = DB::select($sql);
+
+        return view('user.pages.detail-riwayat-diagnosa', ['data'=>$pasien, 'gejala'=>$gejala]);
+    }
+
     public function profil($id)
     {
         $id_user = Crypt::decrypt($id);
         $user = User::findOrFail($id_user);
-        return view('user.pages.form-data-diri', ['user'=>$user]);
+        $tgl = Carbon::parse($user->tgl_lahir)->format('m/d/Y');
+        return view('user.pages.form-data-diri', ['user'=>$user, 'tgl'=>$tgl]);
     }
 
     public function info()

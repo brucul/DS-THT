@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Penyakit;
 use Validator;
 use DataTables;
+use Illuminate\Validation\Rule;
 
 class PenyakitController extends Controller
 {
@@ -58,7 +59,7 @@ class PenyakitController extends Controller
     {
         $kode_penyakit = DB::table('penyakit')->count('kode_penyakit')+1;
         $rules = array(
-            'penyakit' => 'required',
+            'penyakit' => 'required|unique:penyakit,penyakit',
             'jenis'=> 'required',
         );
 
@@ -118,7 +119,7 @@ class PenyakitController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'penyakit' => 'required',
+            'penyakit' => ['required',Rule::unique('penyakit')->ignore($request->hidden_id)],
             'jenis'=> 'required',
         );
 

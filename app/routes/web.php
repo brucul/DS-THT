@@ -12,16 +12,27 @@
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	if (Auth::check()) {
+		if (Auth::user()->is_admin == 1) {
+			return redirect()->route('admin.home');
+		}else{
+			return redirect()->route('home');
+		}
+	}else{
+		return view('welcome');
+	}
+	
 });
 
 Auth::routes();
 
-Route::get('trial/{id}', 'HomeController@trial');
+Route::post('trial', 'HomeController@trial')->name('trial');
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('home', 'UserController@info')->name('home');
+Route::get('home/info-penyakit/{id}', 'UserController@showInfo')->name('show');
 Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');
-Route::get('diagnosis', 'UserController@diagnosa')->name('diagnosa');
+Route::get('riwayat-diagnosa/detail/{id}', 'UserController@detailRiwayat')->name('detail-riwayat');
+Route::get('diagnosis/{id}', 'UserController@diagnosa')->name('diagnosa');
 Route::post('diagnosis/hasil-diagnosis', 'DSController@diagnosis')->name('hasil-diagnosis');
 //Route::post('diagnosis/hasil-diagnosis/{id}/gejala', 'DSController@show')->name('gejala-diagnosis');
 Route::get('profil/{id}', 'UserController@profil')->name('profil');
@@ -29,7 +40,7 @@ Route::post('profil/update-profil', 'UserController@update_profil')->name('updat
 Route::post('profil/update-pass', 'UserController@update_pass')->name('update.pass');
 Route::group(['prefix' => 'info-penyakit', 'as' => 'info.'], function(){
 	Route::get('/', 'UserController@info')->name('home');
-	Route::get('/detail/{id}', 'UserController@showInfo')->name('show');
+	
 });
 
 

@@ -1,21 +1,22 @@
 @extends('admin.layouts.dashboard')
 
 @section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('public/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 @endsection
 
 @section('content')
 <br/>
 <div class="row">
     @if (Session::has('toast_error'))
-        <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
-        <script>
-            Swal.fire({!! Session::pull('toast_error') !!})
-        </script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
+    <script>
+        Swal.fire({!! Session::pull('toast_error') !!})
+    </script>
     @elseif (Session::has('toast_success'))
-        <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
-        <script>
-            Swal.fire({!! Session::pull('toast_success') !!})
-        </script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
+    <script>
+        Swal.fire({!! Session::pull('toast_success') !!})
+    </script>
     @endif
     <div class="col-md-6">
         <div class="card">
@@ -27,7 +28,7 @@
                         <input type="hidden" name="id" class="form-control" value="{{ $user->id }}" required>
                         <label class="col-sm-4 text-right control-label col-form-label">Nama</label>
                         <div class="col-sm-8">
-                            <input type="text" name="nama" class="form-control" value="{{ $user->name }}" onKeyPress="return event.charCode < 48 || event.charCode > 57" required>
+                            <input type="text" name="nama" class="form-control hurufSaja" value="{{ $user->name }}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -40,6 +41,40 @@
                         <label class="col-sm-4 text-right control-label col-form-label">Verifikasi E-mail</label>
                         <div class="col-sm-8">
                             <input type="email" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 text-right control-label col-form-label">Tanggal Lahir : </label>
+                        <div class="input-group col-sm-8">
+                            <input type="text" name="tanggal" class="form-control tanggal" id="tanggal" placeholder="mm/dd/yyyy" value="{{ $tgl }}" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 text-right control-label col-form-label">Jenis Kelamin :</label>
+                        <div class="col-sm-8">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="customControlValidation1" name="jenis_kelamin" value="Laki-laki" required {{ ($user->jk == 'Laki-laki') ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customControlValidation1">Laki-laki</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="customControlValidation2" name="jenis_kelamin" value="Perempuan" required {{ ($user->jk == 'Perempuan') ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customControlValidation2">Perempuan</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 text-right control-label col-form-label">No. HP</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="no_hp" class="form-control angkaSaja" value="{{ $user->no_hp }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 text-right control-label col-form-label">Alamat</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="alamat">{{ $user->alamat }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -89,4 +124,12 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('public/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript">
+    /*datwpicker*/
+        jQuery('#tanggal').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+</script>
 @endsection

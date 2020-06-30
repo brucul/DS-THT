@@ -13,18 +13,12 @@
         </div>
     </div>
     @endif
-    @foreach($penyakit as $p)
-    <div class="col-md-4 col-sm-4">
-        <div class="panel panel-custom" style="max-height: 300px">
-            <div class="panel-heading">
-                {{ $p->penyakit }}
-            </div>
-            <div class="panel-body">
-                <!--<p>{{ substr($p->detail,1,200) }}</p>-->
-            </div>
-            <div class="panel-footer">
-                <a href="{{ url('info-penyakit/detail') }}/{{ $p->kode }}" style="text-decoration: none">Read More . .</a>
-            </div>
+    @foreach($penyakit as $p)            
+    <div class="col-md-4 col-sm-4 col-xs-6">
+        <div class="alert alert-info back-widget-set text-center">
+            <i class="fa fa-heartbeat fa-5x"></i>
+            <h3>{{ $p->penyakit }}</h3>
+            <a class="btn btn-outline-primary" href="{{ url('home/info-penyakit') }}/{{ $p->kode }}" style="text-decoration: none">Tentang {{ $p->penyakit }}</a>
         </div>
     </div>
     @endforeach

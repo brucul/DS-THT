@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GejalaTableSeeder::class);
         $this->call(PenyakitTableSeeder::class);
         $this->call(DSRulesTableSeeder::class);
+        //$this->call(FCRulesTableSeeder::class);
     }
 }

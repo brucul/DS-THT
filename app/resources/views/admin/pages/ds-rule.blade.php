@@ -85,7 +85,7 @@
                                 </div>
                                 <label class="control-label col-md-12">Bobot : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="bobot" id="bobot" class="form-control" />
+                                    <input type="text" name="bobot" id="bobot" class="form-control bobot" />
                                 </div>
                             </div>
                             <br />
@@ -155,6 +155,7 @@
         });
 
         $('#create_record').click(function(){
+            $('#form_result').html('');
             $('.modal-title').text("Tambah Rule");
             $('#action_button').val("Add");
             $('#action').val("Add");
@@ -166,8 +167,8 @@
             var id = $(this).attr('id');
             $('#form_result').html('');
             $.get("{{ url('/admin/ds-rules') }}" +'/' + id +'/edit', function (html) {
-                $('#penyakit').val(html.data.penyakit);
-                $('#gejala').val(html.data.gejala);
+                $('#penyakit').val(html.data.id_penyakit);
+                $('#gejala').val(html.data.id_gejala).prop('selected', true);
                 $('#bobot').val(html.data.bobot);
                 $('#hidden_id').val(html.data.id);
                 $('.modal-title').text("Edit Penyakit");

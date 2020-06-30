@@ -13,14 +13,13 @@
 @endif
 <div class="row">
     @foreach($penyakit as $p)
-    <div class="col-md-4">
-        <div class="card" style="max-height: 300px">
-            <div class="card-body">
-                <h5 class="card-title">{{ $p->penyakit }}</h5>
-                <!--<p>{{ substr($p->detail,1,200) }}</p>-->
-            </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{{ url('admin/info-penyakit/edit') }}/{{ $p->kode_penyakit }}';">Edit</button>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-4 col-xlg-3">
+        <div class="card card-hover">
+            <div class="box bg-info text-center">
+                <h1 class="font-light text-white"><i class="mdi mdi-heart-pulse"></i></h1>
+                <h6 class="text-white">{{ $p->penyakit }}</h6>
+                <button type="button" class="btn btn-sm btn-outline-light" onclick="window.location.href='{{ url('admin/info-penyakit/edit') }}/{{ $p->kode_penyakit }}';">Edit</button>
             </div>
         </div>
     </div>

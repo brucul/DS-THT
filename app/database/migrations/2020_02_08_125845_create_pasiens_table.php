@@ -14,16 +14,16 @@ class CreatePasiensTable extends Migration
     public function up()
     {
         Schema::create('pasien', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id_pasien');
             $table->UnsignedBigInteger('id_user');
-            $table->string('nama');
-            $table->date('tgl_lahir');
-            $table->set('jk', ['Laki-laki', 'Perempuan']);
-            $table->char('no_hp');
-            $table->longText('alamat');
-            $table->string('diagnosis');
-            $table->string('prosentase');
-            $table->string('gejala');
+            //$table->string('nama')->nullable();
+            //$table->date('tgl_lahir')->nullable();
+            //$table->set('jk', ['Laki-laki', 'Perempuan'])->nullable();
+            //$table->char('no_hp')->unique()->nullable();
+            //$table->longText('alamat')->nullable();
+            $table->string('diagnosis')->nullable();
+            $table->string('prosentase')->nullable();
+            $table->string('gejala')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -36,6 +36,6 @@ class CreatePasiensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pasiens');
+        Schema::dropIfExists('pasien');
     }
 }

@@ -26,16 +26,21 @@ class PasienController extends Controller
     {
         if(request()->ajax())
         {
-            return datatables()->of(DB::table('pasien')->select('pasien.*', 'penyakit.penyakit')->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')->get())
-                    ->addIndexColumn()
-                    ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
-                        $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+            return datatables()
+                ->of(DB::table('pasien')
+                    ->select('pasien.*', 'penyakit.penyakit', 'users.*')
+                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->join('users', 'pasien.id_user', '=', 'users.id')
+                    ->get())
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    $button = '<button type="button" name="edit" id="'.$data->id_pasien.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="'.$data->id_pasien.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('admin.pages.data-pasien');
     }
@@ -82,9 +87,12 @@ class PasienController extends Controller
     {
         if(request()->ajax())
         {
-            $data = Pasien::findOrFail($id);
+            $data = DB::table('pasien')
+                        ->join('users', 'users.id', '=', 'pasien.id_user')
+                        ->where('id_pasien', $id)
+                        ->first();
             $tgl = Carbon::parse($data->tgl_lahir)->format('Y-m-d');
-            $sql="SELECT gejala FROM pasien WHERE id=".$id;
+            $sql="SELECT gejala FROM pasien WHERE id_pasien=".$id;
             $list = DB::select($sql);
 
             $kode=explode(',', $list[0]->gejala);

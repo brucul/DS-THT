@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Gejala : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="gejala" id="gejala" class="form-control" />
+                                    <input type="text" name="gejala" id="gejala" class="form-control hurufSaja" />
                                 </div>
                                 <label class="control-label col-md-4">Jenis Gejala : </label>
                                 <div class="col-md-12">
@@ -127,9 +127,11 @@
         $(document).on('click', '.edit', function(){
             var id = $(this).attr('id');
             $('#form_result').html('');
+            $('#sample_form').trigger("reset");
             $.get("{{ url('/admin/data-gejala') }}" +'/' + id +'/edit', function (html) {
                 $('#gejala').val(html.data.gejala);
                 $('#jenis').val(html.data.jenis);
+                //$('[name="jenis"][value="Umum"]').prop('selected', true);
                 $('#hidden_id').val(html.data.id);
                 $('.modal-title').text("Edit Gejala");
                 $('#action_button').val("Edit");

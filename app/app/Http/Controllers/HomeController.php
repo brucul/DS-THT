@@ -8,6 +8,7 @@ use App\User;
 use App\Pasien;
 use App\Gejala;
 use App\Penyakit;
+use App\ForwardChaining;
 
 class HomeController extends Controller
 {
@@ -56,19 +57,9 @@ class HomeController extends Controller
         return view('admin.pages.home', ['telinga' => $telinga, 'hidung' => $hidung, 'tenggorokan' => $tenggorokan]);
     }
     
-    public function trial($id){
-        $sql="SELECT gejala FROM pasien WHERE id=".$id;
-        $list = DB::select($sql);
-
-        $kode=explode(',', $list[0]->gejala);
-
-        $sql="SELECT gejala FROM gejala WHERE kode_gejala IN ('".implode("','",$kode)."')";
-        $list = DB::select($sql);
-
-        foreach ($list as $key => $value) {
-            echo $value->gejala;
-            echo "<br/>";
-        }
+    public function trial(Request $request){
+        DB::table('fc_rules')->where('penyakit' ,$request->penyakit)->update([$request->kode => $request->value]);
+        return back()->with('toast_success', 'Berhasil Diubah');
     }
 
     /**
