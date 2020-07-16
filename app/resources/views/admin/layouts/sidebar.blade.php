@@ -12,7 +12,7 @@
                         <li class="sidebar-item"><a href="{{ route('admin.info.list') }}" class="sidebar-link"><i class="mdi mdi-book-minus"></i><span class="hide-menu"> Info Penyakit </span></a></li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.pasien') }}" aria-expanded="false"><i class="mdi mdi-account-multiple-plus"></i><span class="hide-menu"> Data Pasien </span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.pasien') }}" aria-expanded="false"><i class="mdi mdi-account-multiple-plus"></i><span class="hide-menu"> Riwayat Diagnosis </span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-all-inclusive"></i><span class="hide-menu">Rules </span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item"><a href="{{ route('admin.ds-rules') }}" class="sidebar-link"><i class="mdi mdi-vector-circle"></i><span class="hide-menu"> Dempster-Shafer </span></a></li>

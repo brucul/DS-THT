@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Sistem Pakar</title>
+        <title>Diagnosis Penyakit THT</title>
 
         <link rel="shortcut icon" href="{{ asset('public/favicon.png') }}">
         <link rel="stylesheet" href="{{ asset('public/landing/css/linearicons.css') }}">

@@ -9,7 +9,7 @@
         	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/favicon.png') }}">
-        <title>Sistem Pakar</title>
+        <title>Diagnosis Penyakit THT</title>
         <!-- BOOTSTRAP CORE STYLE  -->
           <link href="{{ asset('public/user/assets/css/bootstrap.css') }}" rel="stylesheet" />
         <!-- FONT AWESOME STYLE  -->
@@ -45,13 +45,13 @@
 	    				<!--<li class="{{ (request()->is('home*')) ? 'menu-top-active' : '' }}">
 	    					<a href="{{ route('home') }}">HOME</a></li>-->
 	    				<li class="{{ (request()->is('home*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ route('home') }}">Home</a></li>
+	    					<a href="{{ route('home') }}" style="color: {{ (request()->is('home*')) ? 'black' : '' }}">Home</a></li>
 	    				<li class="{{ (request()->is('diagnosis*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ url('diagnosis') }}/{{ $id }}">DIAGNOSIS</a></li>
+	    					<a href="{{ url('diagnosis') }}/{{ $id }}" style="color: {{ (request()->is('diagnosis*')) ? 'black' : '' }}">DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('riwayat-diagnosa*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}">RIWAYAT DIAGNOSIS</a></li>
+	    					<a href="{{ url('riwayat-diagnosa') }}/{{ $id }}" style="color: {{ (request()->is('riwayat-diagnosa*')) ? 'black' : '' }}">RIWAYAT DIAGNOSIS</a></li>
 	    				<li class="{{ (request()->is('profil*')) ? 'menu-top-active' : '' }}">
-	    					<a href="{{ url('profil') }}/{{ $id }}">PROFIL {{@Auth::user()->name}}</a></li>
+	    					<a href="{{ url('profil') }}/{{ $id }}" style="color: {{ (request()->is('profil*')) ? 'black' : '' }}">PROFIL {{@Auth::user()->name}}</a></li>
 	    			</ul>
 	    		</div>
     		</div>
@@ -63,11 +63,6 @@
     				<div class="col-md-12">
     					<h4 class="header-line">HALO {{@Auth::user()->name}} ,</h4>
     				</div>
-                    @if(@Auth::user()->tgl_lahir==null || @Auth::user()->jk==null || @Auth::user()->no_hp==null || @Auth::user()->alamat==null)
-                    <div class="col-md-12 alert alert-danger">
-                        Profil anda belum lengkap, untuk bisa melakukan diagnosis silakan lengkapi profil anda <a href="{{ url('profil') }}/{{ $id }}" class="alert-link">di sini</a>.
-                    </div>
-                    @endif
     			</div>
                 @include('sweetalert::alert')
     			@yield('content')

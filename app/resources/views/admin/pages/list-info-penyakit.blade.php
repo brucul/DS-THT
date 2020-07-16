@@ -19,7 +19,7 @@
             <div class="box bg-info text-center">
                 <h1 class="font-light text-white"><i class="mdi mdi-heart-pulse"></i></h1>
                 <h6 class="text-white">{{ $p->penyakit }}</h6>
-                <button type="button" class="btn btn-sm btn-outline-light" onclick="window.location.href='{{ url('admin/info-penyakit/edit') }}/{{ $p->kode_penyakit }}';">Edit</button>
+                <button type="button" class="btn btn-sm btn-outline-light" onclick="window.location.href='{{ url('admin/info-penyakit/edit', $p->kode_penyakit) }}';">Edit</button>
             </div>
         </div>
     </div>

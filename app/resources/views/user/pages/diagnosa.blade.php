@@ -1,6 +1,9 @@
 @extends('user.layouts.dashboard')
 
 @section('content')
+@php
+            $id = Crypt::encrypt(Auth::user()->id);
+        @endphp
 <div class="row">
     <div class="col-12">
         @if(@Auth::user()->tgl_lahir!='' && @Auth::user()->jk!='' && @Auth::user()->no_hp!=0 && @Auth::user()->alamat!='')
@@ -106,6 +109,15 @@
                     <input type="submit" name="submit" class="btn btn-outline-success submit" value="Diagnosis Saya . .">
                 </form>
             </div>
+        </div>
+        @else
+        <div class="alert alert-danger text-center">
+            <h3 style="font-weight: bold;"> IMPORTANT NOTICE</h3> 
+            <hr />
+            <i class="fa fa-warning fa-4x"></i>
+            <p style="font-size: 16px">Profil anda belum lengkap, untuk bisa melakukan diagnosis silakan lengkapi profil anda !</p>
+            <hr />
+            <a href="{{ url('profil') }}/{{ $id }}" class="btn btn-outline-danger">Lengkapi Profil</a> 
         </div>
         @endif
     </div>

@@ -25,23 +25,30 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::post('trial', 'HomeController@trial')->name('trial');
+//Route::post('trial', 'HomeController@trial')->name('trial');
+Route::get('register/{token}','Auth\RegisterController@activating')->name('activating-account');
 
-Route::get('home', 'UserController@info')->name('home');
-Route::get('home/info-penyakit/{id}', 'UserController@showInfo')->name('show');
-Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');
-Route::get('riwayat-diagnosa/detail/{id}', 'UserController@detailRiwayat')->name('detail-riwayat');
-Route::get('diagnosis/{id}', 'UserController@diagnosa')->name('diagnosa');
-Route::post('diagnosis/hasil-diagnosis', 'DSController@diagnosis')->name('hasil-diagnosis');
-//Route::post('diagnosis/hasil-diagnosis/{id}/gejala', 'DSController@show')->name('gejala-diagnosis');
-Route::get('profil/{id}', 'UserController@profil')->name('profil');
-Route::post('profil/update-profil', 'UserController@update_profil')->name('update.profil');
-Route::post('profil/update-pass', 'UserController@update_pass')->name('update.pass');
-Route::group(['prefix' => 'info-penyakit', 'as' => 'info.'], function(){
-	Route::get('/', 'UserController@info')->name('home');
-	
+Route::group(['middleware' => 'verified'], function () {
+	Route::get('home', 'UserController@info')->name('home');
+	Route::get('home/info-penyakit/{id}', 'UserController@showInfo')->name('show');
+	Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');
+	Route::get('riwayat-diagnosa/detail/{id}', 'UserController@detailRiwayat')->name('detail-riwayat');
+	Route::get('riwayat-diagnosa/cetak-riwayat/{id}', 'UserController@riwayatPDF')->name('cetak-riwayat');
+	Route::get('pegawai/cetak_pdf', 'PegawaiController@cetak_pdf');
+	Route::get('diagnosis/{id}', 'UserController@diagnosa')->name('diagnosa');
+	Route::post('diagnosis/hasil-diagnosis', 'DSController@diagnosis')->name('hasil-diagnosis');
+	//Route::post('diagnosis/hasil-diagnosis/{id}/gejala', 'DSController@show')->name('gejala-diagnosis');
+	Route::get('profil/{id}', 'UserController@profil')->name('profil');
+	Route::post('profil/update-profil', 'UserController@update_profil')->name('update.profil');
+	Route::post('profil/update-pass', 'UserController@update_pass')->name('update.pass');
+	Route::group(['prefix' => 'info-penyakit', 'as' => 'info.'], function(){
+		Route::get('/', 'UserController@info')->name('home');
+		
+	});
 });
+
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.'], function() {
@@ -70,6 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.']
 	Route::get('data-pasien/{id}/edit', 'PasienController@edit')->name('pasien.edit');
 	Route::post('data-pasien/update', 'PasienController@update')->name('pasien.update');
 	Route::get('data-pasien/destroy/{id}', 'PasienController@destroy')->name('pasien.delete');
+	Route::get('riwayat-diagnosa/cetak-riwayat', 'PasienController@riwayatPDF')->name('cetak-riwayat');
 	
 	//DS
 	Route::get('ds-rules', 'DSController@index')->name('ds-rules');
@@ -88,4 +96,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.']
 	Route::get('users-account/edit/{id}', 'UserController@edit')->name('users.account.edit');
 	Route::post('users-account/update-profil', 'UserController@update_profil')->name('update.profil');
 	Route::post('users-account/update-pass', 'UserController@update_pass_admin')->name('update.pass');
+	Route::get('users-account/destroy/{id}', 'UserController@destroy')->name('users.delete');
 });

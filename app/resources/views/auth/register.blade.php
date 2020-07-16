@@ -11,7 +11,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/admin/assets/images/favicon.png') }}">
     
-    <title>Sistem Pakar</title>
+    <title>Diagnosis Penyakit THT</title>
     <!-- Custom CSS -->
     <link href="{{ asset('public/admin/assets/libs/flot/css/float-chart.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -38,7 +38,7 @@
                         <span class="db"><img src="{{ asset('public/admin/assets/images/logo.png') }}" alt="logo" /></span>
                     </div>
                     <!-- Form -->
-                    <form class="form-horizontal m-t-20" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal m-t-20" autocomplete="off" method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="row p-b-30">
                             <div class="col-12">
@@ -46,7 +46,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-success text-white" id="basic-addon1" data-toggle="tooltip" title="Masukkan nama lengkap anda !"><i class="ti-user"></i></span>
                                     </div>
-                                    <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror hurufSaja" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Nama Lengkap" aria-label="Username" aria-describedby="basic-addon1" autofocus style="border: none;">
+                                    <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror hurufSaja" name="name" value="{{ old('name') }}" required autocomplete="off" placeholder="Nama Lengkap" aria-label="Username" aria-describedby="basic-addon1" autofocus style="border: none;">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-danger text-white" id="basic-addon1" data-toggle="tooltip" title="Masukkan email anda !"><i class="ti-email"></i></span>
                                     </div>
-                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" style="border: none;">
+                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" placeholder="Email" aria-describedby="basic-addon1" style="border: none;">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -69,7 +69,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-warning text-white" id="basic-addon2" data-toggle="tooltip" title="Password minimal 8 karakter !"><i class="ti-lock"></i></span>
                                     </div>
-                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" style="border: none;">
+                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="off" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" style="border: none;">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -80,7 +80,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-info text-white" id="basic-addon2" data-toggle="tooltip" title="Ulangi password anda !"><i class="ti-key"></i></span>
                                     </div>
-                                    <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password" aria-label="Password" aria-describedby="basic-addon1" style="border: none;">
+                                    <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required autocomplete="off" placeholder="Confirm Password" aria-label="Password" aria-describedby="basic-addon1" style="border: none;">
                                 </div>
                             </div>
                         </div>

@@ -58,28 +58,33 @@ class PenyakitController extends Controller
     public function store(Request $request)
     {
         $kode_penyakit = DB::table('penyakit')->count('kode_penyakit')+1;
-        $rules = array(
+
+        $penyakit = DB::table('penyakit')->where([['penyakit', $request->penyakit], ['deleted_at', '!=', null]])->count('penyakit');
+        
+        if ($penyakit >= 1) {
+            DB::table('penyakit')->where('penyakit', $request->penyakit)->update(['deleted_at' => null, 'jenis' => $request->jenis]);
+            return response()->json(['success' => 'Data Added successfully.']);
+        } else {
+            $rules = array(
             'penyakit' => 'required|unique:penyakit,penyakit',
             'jenis'=> 'required',
-        );
+            );
 
-        $error = Validator::make($request->all(), $rules);
+            $error = Validator::make($request->all(), $rules);
 
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
+            if($error->fails()){
+                return response()->json(['errors' => $error->errors()->all()[0]]);
+            }else{
+                $form_data = array(
+                    'kode_penyakit' => 'P'.$kode_penyakit,
+                    'penyakit' => $request->penyakit,
+                    'jenis' => $request->jenis,
+                );
+
+                Penyakit::create($form_data);
+                return response()->json(['success' => 'Data Added successfully.']);
+            }
         }
-
-
-        $form_data = array(
-            'kode_penyakit' => 'P'.$kode_penyakit,
-            'penyakit' => $request->penyakit,
-            'jenis' => $request->jenis,
-        );
-
-        Penyakit::create($form_data);
-
-        return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**
@@ -127,7 +132,7 @@ class PenyakitController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['errors' => $error->errors()->all()[0]]);
         }
 
         $form_data = array(

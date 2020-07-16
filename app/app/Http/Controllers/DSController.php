@@ -41,14 +41,15 @@ class DSController extends Controller
                 DB::table('ds_rules')
                 ->join('penyakit', 'ds_rules.id_penyakit', '=', 'penyakit.kode_penyakit')
                 ->join('gejala', 'ds_rules.id_gejala', '=', 'gejala.kode_gejala')
-                ->select('ds_rules.*', 'penyakit.*', 'gejala.*')
+                ->select('ds_rules.id as id_ds', 'ds_rules.bobot', 'penyakit.*', 'gejala.*')
+                ->where('ds_rules.deleted_at', null)
                 ->get()
             )
             ->addIndexColumn()
             ->addColumn('action', function($data){
-                $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
+                $button = '<button type="button" name="edit" id="'.$data->id_ds.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
+                $button .= '<button type="button" name="delete" id="'.$data->id_ds.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
                 return $button;
             })
             ->rawColumns(['action'])
@@ -216,29 +217,36 @@ class DSController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = array(
-            'penyakit' => 'required',
-            'gejala' => 'required',
-            'bobot' => 'required|numeric',
-        );
+        $cek = DB::table('ds_rules')
+                    ->where([
+                        ['id_penyakit', $request->penyakit], 
+                        ['id_gejala', $request->gejala],
+                        ['deleted_at', null]])
+                    ->count('id');
 
-        $error = Validator::make($request->all(), $rules);
+        if ($cek >= 1) {
+            return response()->json(['errors' => 'Data already exists.']);
+        } else {
+            $rules = array(
+                'penyakit' => 'required',
+                'gejala' => 'required',
+                'bobot' => 'required|numeric',
+            );
 
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()[0]]);
+            } else {
+                $form_data = array(
+                    'id_penyakit' => $request->penyakit,
+                    'id_gejala' => $request->gejala,
+                    'bobot' => $request->bobot,
+                );
+
+                Rule::create($form_data);
+                return response()->json(['success' => 'Data added successfully.']);
+            }
         }
-
-
-        $form_data = array(
-            'id_penyakit' => $request->penyakit,
-            'id_gejala' => $request->gejala,
-            'bobot' => $request->bobot,
-        );
-
-        Rule::create($form_data);
-
-        return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**
@@ -283,27 +291,36 @@ class DSController extends Controller
      */
     public function update(Request $request)
     {
-        $rules = array(
-            'penyakit' => 'required',
-            'gejala' => 'required',
-            'bobot' => 'required|numeric',
-        );
+        $cek = DB::table('ds_rules')
+                    ->where([
+                        ['id_penyakit', $request->penyakit], 
+                        ['id_gejala', $request->gejala],
+                        ['deleted_at', null]])
+                    ->count('id');
 
-        $error = Validator::make($request->all(), $rules);
+        if ($cek >= 1) {
+            return response()->json(['errors' => 'Data already exists.']);
+        } else {
+            $rules = array(
+                'penyakit' => 'required',
+                'gejala' => 'required',
+                'bobot' => 'required|numeric',
+            );
 
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()[0]]);
+            } else {
+                $form_data = array(
+                    'id_penyakit' => $request->penyakit,
+                    'id_gejala' => $request->gejala,
+                    'bobot' => $request->bobot,
+                );
+
+                Rule::create($form_data);
+                return response()->json(['success' => 'Data added successfully.']);
+            }
         }
-
-        $form_data = array(
-            'id_penyakit' => $request->penyakit,
-            'id_gejala' => $request->gejala,
-            'bobot' => $request->bobot,
-        );
-        Rule::whereId($request->hidden_id)->update($form_data);
-
-        return response()->json(['success' => 'Data is successfully updated']);
     }
 
     /**

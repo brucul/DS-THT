@@ -23,7 +23,9 @@ class CreateUsersTable extends Migration
             $table->set('jk', ['Laki-laki', 'Perempuan'])->nullable();
             $table->char('no_hp')->unique()->nullable();
             $table->longText('alamat')->nullable();
-            $table->boolean('is_admin')->nullable();
+            $table->boolean('is_admin')->default(false);
+            // $table->boolean('is_active')->default(false);
+            $table->longText('token_register');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

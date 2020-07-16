@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Gejala : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="gejala" id="gejala" class="form-control hurufSaja" />
+                                    <input type="text" name="gejala" id="gejala" class="form-control hurufSaja" autocomplete="off" />
                                 </div>
                                 <label class="control-label col-md-4">Jenis Gejala : </label>
                                 <div class="col-md-12">
@@ -69,7 +69,8 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                        <h4 class="confirm" align="center" style="margin-bottom: 10px;"></h4>
+                        <h5 class="notif"></h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" name="ok_button" id="ok_button" class="btn btn-outline-danger">OK</button>
@@ -154,11 +155,7 @@
                     success:function(data){
                         var html = '';
                         if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++){
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
+                            html = '<div class="alert alert-danger">' + data.errors + '</div>';
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
@@ -185,12 +182,7 @@
                     success:function(data){
                         var html = '';
                         if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++)
-                            {
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
+                            html = '<div class="alert alert-danger">' + data.errors + '</div>';
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
@@ -213,6 +205,8 @@
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Record");
             $('#ok_button').text('OK');
+            $('.confirm').text('Are you sure you want to remove this data?');
+            $('.notif').html('');
         });
 
         $('#ok_button').click(function(){
@@ -231,9 +225,11 @@
                             html += '<p>' + data.errors[count] + '</p>';
                         }
                         html += '</div>';
+                        $('.notif').html(html);
                     }
                     if(data.success){
-                        html = '<div class="alert alert-success">' + data.success + '</div>';
+                        html = '<div class="alert alert-success" align="center">Data berhasil dihapus</div>';
+                        $('.notif').html(html);
                         setTimeout(function(){
                             $('#tabel_gejala').DataTable().ajax.reload();
                             $('#confirmModal').modal('hide');

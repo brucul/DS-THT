@@ -266,14 +266,12 @@
 .menu-top-active {
     background-color:#00ff8c;
 }
-.menu-top-active a {
-    color: #f7f7f7;
-}
 
 #top-menu a {
-    color: black;
+    letter-spacing: 2px;
+    color: #00ff8c;
     text-decoration:none;
-    font-weight:bold;
+    font-weight: 700;
     padding: 25px 15px 25px 15px;
     text-transform:uppercase;
 
@@ -285,7 +283,7 @@
     font-weight:bold;
     padding: 25px 15px 25px 15px;
     text-transform:uppercase;
-
+    color: black;
 }
 
 .navbar-inverse {

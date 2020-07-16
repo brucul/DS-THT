@@ -13,6 +13,8 @@ use App\InfoPenyakit;
 use App\Pasien;
 Use Alert;
 use Carbon\Carbon;
+use PDF;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -25,10 +27,24 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $users = DB::table('users')->where('is_admin', null)->get();
-        return view('admin.pages.user-account', ['users'=>$users]);
+        if(request()->ajax())
+        {
+            return datatables()->of(DB::table('users')->where([['is_admin', '!=', 1], ['deleted_at', null]])->get())
+                    ->addIndexColumn()
+                    ->addColumn('action', function($data){
+                        $id = Crypt::encrypt($data->id);
+                        $button = '<button type="button" name="edit" id="'.$id.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<button type="button" name="delete" id="'.$id.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('admin.pages.user-account');
     }
 
     /**
@@ -89,9 +105,8 @@ class UserController extends Controller
         $id=$request->id;
 
         $rules = array(
-            'nama' =>  'required|alpha|max:100',
-            'email' => 'required|email|min:10|unique:users,email',
-            //'v_email' => 'unique:users,email_verified_at',
+            'nama' =>  'required|max:100',
+            'email' => ['required','email','min:10',Rule::unique('users')->ignore($id)],
             'tanggal' => 'required|before:today',
             'jenis_kelamin' => 'required',
             'no_hp' => 'required|numeric',
@@ -106,7 +121,6 @@ class UserController extends Controller
             $form_data = array(
                 'name' => $request->nama,
                 'email' => $request->email,
-                'email_verified_at' => $request->v_email,
                 'tgl_lahir' => Carbon::parse($request->tanggal)->format('Y-m-d'),
                 'jk' => $request->jenis_kelamin,
                 'no_hp' => $request->no_hp,
@@ -183,7 +197,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id_user = Crypt::decrypt($id);
+        $data = User::findOrFail($id_user);
+        $data->delete();
+            
+        return response()->json(['success' => 'Data is successfully deleted']);
     }
 
     public function diagnosa($id)
@@ -207,18 +225,18 @@ class UserController extends Controller
     {
         $id_user = Crypt::decrypt($id);
         $riwayat = DB::table('pasien')
-                    ->join('users', 'pasien.id_user', '=', 'users.id')
+                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'pasien.prosentase', 'penyakit.penyakit', 'users.*')
+                    ->where([['pasien.deleted_at', null], ['id_user', $id_user]])
                     ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
-                    ->select('pasien.*', 'users.*', 'penyakit.penyakit')
-                    ->where('id_user', $id_user)
+                    ->join('users', 'pasien.id_user', '=', 'users.id')
                     ->get();
-        return view('user.pages.riwayat-diagnosa', ['riwayat'=>$riwayat]);
+        return view('user.pages.riwayat-diagnosa', ['riwayat'=>$riwayat, 'count'=>count($riwayat)]);
     }
 
     public function detailRiwayat($id)
     {
         $pasien = DB::table('pasien')
-                ->where('pasien.id_pasien', $id)
+                ->where('pasien.id', $id)
                 ->join('users', 'pasien.id_user', '=', 'users.id')
                 ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
                 ->select('pasien.*', 'penyakit.*', 'users.*')
@@ -256,5 +274,20 @@ class UserController extends Controller
     {
         $penyakit = InfoPenyakit::where('kode', $id)->first();
         return view('user.pages.detail-info-penyakit', ['penyakit' => $penyakit]);
+    }
+
+    public function riwayatPDF($id)
+    {
+        $id_user = Crypt::decrypt($id);
+        $data = DB::table('pasien')
+                    ->join('users', 'pasien.id_user', '=', 'users.id')
+                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->select('pasien.*', 'users.*', 'penyakit.penyakit')
+                    ->where('id_user', $id_user)
+                    ->get();
+        $pdf = PDF::loadview('user.pages.riwayat-diagnosa-pdf', ['pasien'=>$data]);
+  
+        //return view('user.pages.riwayat-diagnosa-pdf', ['pasien'=>$data]);
+        return $pdf->download('riwayat.pdf');
     }
 }

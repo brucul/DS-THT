@@ -13,11 +13,11 @@ class AddForeignFCTable extends Migration
      */
     public function up()
     {
-        Schema::table('fc_rules', function (Blueprint $table) {
-            $table->foreign('penyakit')
-                  ->references('kode_penyakit')->on('penyakit')
-                  ->onDelete('cascade');
-        });
+        // Schema::table('fc_rules', function (Blueprint $table) {
+        //     $table->foreign('penyakit')
+        //           ->references('kode_penyakit')->on('penyakit')
+        //           ->onDelete('cascade');
+        // });
     }
 
     /**

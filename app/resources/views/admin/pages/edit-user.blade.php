@@ -28,25 +28,19 @@
                         <input type="hidden" name="id" class="form-control" value="{{ $user->id }}" required>
                         <label class="col-sm-4 text-right control-label col-form-label">Nama</label>
                         <div class="col-sm-8">
-                            <input type="text" name="nama" class="form-control hurufSaja" value="{{ $user->name }}" required>
+                            <input type="text" name="nama" class="form-control hurufSaja" value="{{ $user->name }}" required autocomplete="off">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-4 text-right control-label col-form-label">E-mail</label>
                         <div class="col-sm-8">
-                            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 text-right control-label col-form-label">Verifikasi E-mail</label>
-                        <div class="col-sm-8">
-                            <input type="email" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
+                            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required autocomplete="off">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-4 text-right control-label col-form-label">Tanggal Lahir : </label>
                         <div class="input-group col-sm-8">
-                            <input type="text" name="tanggal" class="form-control tanggal" id="tanggal" placeholder="mm/dd/yyyy" value="{{ $tgl }}" required>
+                            <input type="text" name="tanggal" class="form-control tanggal" id="tanggal" placeholder="mm/dd/yyyy" value="{{ $tgl }}" required autocomplete="off">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -68,7 +62,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 text-right control-label col-form-label">No. HP</label>
                         <div class="col-sm-8">
-                            <input type="text" name="no_hp" class="form-control angkaSaja" value="{{ $user->no_hp }}" required>
+                            <input type="text" name="no_hp" class="form-control angkaSaja" value="{{ $user->no_hp }}" required autocomplete="off">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -80,7 +74,7 @@
                 </div>
                 <div class="border-top">
                     <div class="card-body">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </form>
@@ -114,7 +108,7 @@
                 </div>
                 <div class="border-top">
                     <div class="card-body">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Ganti</button>
                     </div>
                 </div>
             </form>

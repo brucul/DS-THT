@@ -26,15 +26,11 @@
                             <input type="hidden" name="id" class="form-control" value="{{ $user->id }}" required>
                             <div class="form-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" name="nama" class="form-control hurufSaja" value="{{ $user->name }}" required>
+                                <input type="text" name="nama" class="form-control hurufSaja" value="{{ $user->name }}" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label>E-mail</label>
-                                <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Verifikasi E-mail ( Opsional )</label>
-                                <input type="email" name="v_email" class="form-control" value="{{ $user->email_verified_at }}">
+                                <input type="email" name="email" class="form-control" value="{{ $user->email }}" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
@@ -58,14 +54,14 @@
                             </div>
                             <div class="form-group">
                                 <label>No. HP</label>
-                                <input type="text" name="no_hp" class="form-control angkaSaja" value="{{ $user->no_hp }}" required>
+                                <input type="text" name="no_hp" class="form-control angkaSaja" value="{{ $user->no_hp }}" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
                                 <textarea name="alamat" class="form-control" style="height: 120px" required>{{ $user->alamat }}</textarea>
                             </div>
                             <hr/>
-                            <input type="submit" class="btn btn-outline-success" name="submit" value="Update">
+                            <input type="submit" class="btn btn-outline-success" name="submit" value="Simpan">
                         </div>
                     </div>
                 </form>
@@ -98,7 +94,7 @@
                             <i class="help-block">Ulangi password baru.</i>
                         </div>
                         <hr/>
-                        <input type="submit" class="btn btn-outline-success" name="submit" value="Update">
+                        <input type="submit" class="btn btn-outline-success" name="submit" value="Ganti">
                     </div>
                 </form>
             </div>

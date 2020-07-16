@@ -11,6 +11,6 @@ class Pasien extends Model
 	protected $dates = ['deleted_at'];
 	protected $table='pasien';
     protected $fillable = [
-     'id_user','nama','tgl_lahir','jk','no_hp','alamat','diagnosis','prosentase','gejala'
+     'id_user','diagnosis','prosentase','gejala'
     ];
 }

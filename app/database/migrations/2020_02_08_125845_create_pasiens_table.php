@@ -14,7 +14,7 @@ class CreatePasiensTable extends Migration
     public function up()
     {
         Schema::create('pasien', function (Blueprint $table) {
-            $table->bigIncrements('id_pasien');
+            $table->bigIncrements('id');
             $table->UnsignedBigInteger('id_user');
             //$table->string('nama')->nullable();
             //$table->date('tgl_lahir')->nullable();

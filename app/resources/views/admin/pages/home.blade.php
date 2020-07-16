@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Jenis Penyakit</th>
-                        <th scope="col">Jumlah Diagnosis</th>
+                        <th scope="col" width="20%">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Jenis Penyakit</th>
-                        <th scope="col">Jumlah Diagnosis</th>
+                        <th scope="col" width="20%">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Jenis Penyakit</th>
-                        <th scope="col">Jumlah Diagnosis</th>
+                        <th scope="col" width="20%">Jumlah Diagnosis</th>
                     </tr>
                 </thead>
                 <tbody>

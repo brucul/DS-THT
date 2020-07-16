@@ -11,7 +11,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/admin/assets/images/favicon.png') }}">
     
-    <title>Sistem Pakar</title>
+    <title>Diagnosis Penyakit THT</title>
     <!-- Custom CSS -->
     <link href="{{ asset('public/admin/assets/libs/flot/css/float-chart.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -51,7 +51,7 @@
                         <span class="db"><img src="{{ asset('public/admin/assets/images/logo.png') }}" alt="logo" /></span>
                     </div>
                     <!-- Form -->
-                    <form method="POST" action="{{ route('login') }}" class="form-horizontal m-t-20" id="loginform">
+                    <form method="POST" autocomplete="off" action="{{ route('login') }}" class="form-horizontal m-t-20" id="loginform">
                         @csrf
                         <div class="row p-b-30">
                             <div class="col-12">
@@ -59,7 +59,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-success text-white" id="basic-addon1" data-toggle="tooltip" title="Masukkan email anda !"><i class="ti-email"></i></span>
                                     </div>
-                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus aria-describedby="basic-addon1" placeholder="Email" style="border: none;" autocomplete="false">
+                                    <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus aria-describedby="basic-addon1" placeholder="Email" style="border: none;" autocomplete="off">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -70,7 +70,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-warning text-white" id="basic-addon2" data-toggle="tooltip" title="Masukkan password anda !"><i class="ti-lock"></i></span>
                                     </div>
-                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" style="border: none;" autocomplete="false">
+                                    <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" style="border: none;" autocomplete="off">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

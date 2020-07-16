@@ -8,6 +8,7 @@ use App\Pasien;
 use Validator;
 use DataTables;
 use Carbon\Carbon;
+use PDF;
 
 class PasienController extends Controller
 {
@@ -28,15 +29,16 @@ class PasienController extends Controller
         {
             return datatables()
                 ->of(DB::table('pasien')
-                    ->select('pasien.*', 'penyakit.penyakit', 'users.*')
+                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'penyakit.penyakit', 'users.*')
+                    ->where('pasien.deleted_at', null)
                     ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
                     ->join('users', 'pasien.id_user', '=', 'users.id')
                     ->get())
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
-                    $button = '<button type="button" name="edit" id="'.$data->id_pasien.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="'.$data->id_pasien.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
+                    //$button = '<button type="button" name="edit" id="'.$data->id_pasien.'" class="edit btn btn-outline-warning btn-sm">Edit</button>';
+                    //$button .= '&nbsp;&nbsp;';
+                    $button = '<button type="button" name="delete" id="'.$data->id_pasien.'" class="delete btn btn-outline-danger btn-sm">Delete</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -125,7 +127,7 @@ class PasienController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['errors' => $error->errors()->all()[0]]);
         }
 
         $form_data = array(
@@ -148,8 +150,24 @@ class PasienController extends Controller
      */
     public function destroy($id)
     {
-        $data = Pasien::findOrFail($id);
-        $data->delete();
+        //DB::table('pasien')->where('id_pasien', $id)->delete();
+        Pasien::findOrFail($id)->delete();
         return response()->json(['success' => 'Data is successfully deleted']);
+    }
+
+    public function riwayatPDF()
+    {
+        // $id_user = Crypt::decrypt($id);
+        $data = DB::table('pasien')
+                    ->join('users', 'pasien.id_user', '=', 'users.id')
+                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->select('pasien.*', 'users.*', 'penyakit.penyakit')
+                    ->orderBy('name')
+                    // ->where('id_user', $id_user)
+                    ->get();
+        $pdf = PDF::loadview('admin.pages.riwayat-diagnosa-pdf', ['pasien'=>$data]);
+  
+        //return view('user.pages.riwayat-diagnosa-pdf', ['pasien'=>$data]);
+        return $pdf->download('riwayat.pdf');
     }
 }

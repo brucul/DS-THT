@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Alert;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -68,6 +69,16 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'token_register'=>Str::random(190),
         ]);
+    }
+
+    public function activating($token)
+    {
+        $model = User::where('token_register', $token)->where('email_verified_at', null)->firstOrFail();
+        // $model->is_active = true;
+        $model->email_verified_at = now();
+        $model->save();
+        return view('auth.verified');
     }
 }

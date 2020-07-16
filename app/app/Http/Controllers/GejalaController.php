@@ -59,16 +59,20 @@ class GejalaController extends Controller
     public function store(Request $request)
     {
         $kode_gejala = DB::table('gejala')->count('kode_gejala')+1;
+
+        $gejala = DB::table('gejala')->where([['gejala', $request->gejala], ['deleted_at', '!=', null]])->count('gejala');
         $rules = array(
             'gejala' =>  'required|unique:gejala,gejala',
             'jenis' => 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
-
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
+        
+        if ($gejala >= 1) {
+            DB::table('gejala')->where('gejala', $request->gejala)->update(['deleted_at' => null, 'jenis' => $request->jenis]);
+            return response()->json(['success' => 'Data Added successfully.']);
+        } elseif($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()[0]]);
         } else {
             $form_data = array(
                 'kode_gejala' => 'G'.$kode_gejala,
@@ -123,7 +127,7 @@ class GejalaController extends Controller
         $error = Validator::make($request->all(), $rules);
 
         if($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['errors' => $error->errors()->all()[0]]);
         } else {
             $form_data = array(
                 'gejala'     =>   $request->gejala,

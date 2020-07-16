@@ -85,7 +85,20 @@
                                 </div>
                                 <label class="control-label col-md-12">Bobot : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="bobot" id="bobot" class="form-control bobot" />
+                                    <select name="bobot" id="bobot" class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                        <option value="">Pilih Bobot . .</option>
+                                        <option value="0">0</option>
+                                        <option value="0.1">0.1</option>
+                                        <option value="0.2">0.2</option>
+                                        <option value="0.3">0.3</option>
+                                        <option value="0.4">0.4</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="0.6">0.6</option>
+                                        <option value="0.7">0.7</option>
+                                        <option value="0.8">0.8</option>
+                                        <option value="0.9">0.9</option>
+                                        <option value="1">1</option>
+                                    </select>
                                 </div>
                             </div>
                             <br />
@@ -107,7 +120,8 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                        <h4 class="confirm" align="center" style="margin-bottom: 10px;"></h4>
+                        <h5 class="notif"></h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" name="ok_button" id="ok_button" class="btn btn-outline-danger">OK</button>
@@ -171,7 +185,7 @@
                 $('#gejala').val(html.data.id_gejala).prop('selected', true);
                 $('#bobot').val(html.data.bobot);
                 $('#hidden_id').val(html.data.id);
-                $('.modal-title').text("Edit Penyakit");
+                $('.modal-title').text("Edit Rule");
                 $('#action_button').val("Edit");
                 $('#action').val("Edit");
                 $('#formModal').modal('show');
@@ -192,11 +206,7 @@
                     success:function(data){
                         var html = '';
                         if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++){
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
+                            html = '<div class="alert alert-danger">' + data.errors + '</div>';
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
@@ -223,12 +233,7 @@
                     success:function(data){
                         var html = '';
                         if(data.errors){
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++)
-                            {
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
+                            html = '<div class="alert alert-danger">' + data.errors + '</div>';
                         }
                         if(data.success){
                             html = '<div class="alert alert-success">' + data.success + '</div>';
@@ -251,6 +256,8 @@
             $('#confirmModal').modal('show');
             $('.modal-title').text("Delete Record");
             $('#ok_button').text('OK');
+            $('.confirm').text('Are you sure you want to remove this data?');
+            $('.notif').html('');
         });
 
         $('#ok_button').click(function(){
@@ -261,6 +268,8 @@
                 },
                 success:function(data)
                 {
+                    html = '<div class="alert alert-success" align="center">Data berhasil dihapus</div>';
+                    $('.notif').html(html);
                     setTimeout(function(){
                         $('#tabel_rule').DataTable().ajax.reload();
                         $('#confirmModal').modal('hide');

@@ -1,12 +1,15 @@
 @extends('user.layouts.dashboard')
 
 @section('content')
+@php
+    $id = Crypt::encrypt(Auth::user()->id);
+@endphp
 <div class="row justify-content-center">
     <div class="row">
         <div class="col-md-12">
             <!-- Advanced Tables -->
             <div class="panel panel-custom">
-                <div class="panel-heading"> Hasil Diagnosa </div>
+                <div class="panel-heading">Hasil Diagnosa</div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -36,31 +39,12 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Modal title Here</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-3">Gejala :</div>
-                                            <div class="col-md-9">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <!--End Advanced Tables -->
+            <hr/>
+            <button onclick="window.location.href='{{url('riwayat-diagnosa/cetak-riwayat')}}/{{$id}}';" class="btn btn-outline-success" target="_blank" {{ ($count==0) ? 'disabled' : '' }}><i class="fa fa-print"></i> CETAK PDF</button>
         </div>
     </div>
 </div>
