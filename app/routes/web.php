@@ -30,7 +30,7 @@ Auth::routes(['verify' => true]);
 //Route::post('trial', 'HomeController@trial')->name('trial');
 Route::get('register/{token}','Auth\RegisterController@activating')->name('activating-account');
 
-Route::group(['middleware' => 'verified'], function () {
+Route::group(['middleware' => ['verified', 'is_user']], function () {
 	Route::get('home', 'UserController@info')->name('home');
 	Route::get('home/info-penyakit/{id}', 'UserController@showInfo')->name('show');
 	Route::get('riwayat-diagnosa/{id}', 'UserController@riwayatDiagnosa')->name('riwayat');

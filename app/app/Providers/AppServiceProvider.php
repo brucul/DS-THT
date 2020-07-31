@@ -25,9 +25,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        \Illuminate\Support\Facades\Validator::extend('is_active',function($attribute,$value,$parameters,$validator){
-            $model = \App\User::where($attribute,$value)->where('is_active',1)->first();
-            return $model ? true : false;
-        },'User belum aktif, mohon cek kembali email anda.');
     }
 }

@@ -179,7 +179,7 @@ class DSController extends Controller
             //echo "<br/>== HASIL AKHIR ==<br/>";
             $codes=array_keys($densitas_baru); 
             $final_codes=explode(',',$codes[0]);
-            $sql="SELECT GROUP_CONCAT(penyakit) AS name, kode_penyakit FROM penyakit WHERE penyakit IN('".implode("','",$final_codes)."')"; 
+            $sql="SELECT GROUP_CONCAT(penyakit) AS name, GROUP_CONCAT(kode_penyakit) AS kode_penyakit FROM penyakit WHERE penyakit IN('".implode("','",$final_codes)."')"; 
             $list = DB::select($sql);
             $row = json_decode(json_encode($list), true);
                     //mengubah array key
@@ -190,9 +190,10 @@ class DSController extends Controller
                     //echo "Terdeteksi penyakit <b>{$row[0][0]}</b> dengan derajat kepercayaan ".round($densitas_baru[$codes[0]]*100,2)."%";
             $sql="SELECT gejala FROM gejala WHERE kode_gejala IN('".implode("','",$request->evidence)."')";
             $gejala = DB::select($sql);
+            
             $form_data = array(
                 'id_user' => auth()->user()->id,
-                'diagnosis' => $row[0]['kode_penyakit'],
+                'diagnosis' => $row[0][0],
                 'prosentase' => round($densitas_baru[$codes[0]]*100,2),
                 'gejala' => implode(',',$request->evidence),
             );

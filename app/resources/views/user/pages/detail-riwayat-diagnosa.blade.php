@@ -34,7 +34,11 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group row">
                             <div class="col-md-3"><label>Diagnosis</label></div>
-                            <div class="col-md-9"><input type="text" class="form-control" value="{{$data->penyakit}} - {{$data->prosentase}}%" readonly></div>
+                            <div class="col-md-9">
+                                @foreach ($penyakit as $key => $value)
+                                {{ $data->prosentase }}% - {{ $value }}<br/>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-3"><label>Gejala</label></div>

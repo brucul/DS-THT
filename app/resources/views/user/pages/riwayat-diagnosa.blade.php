@@ -33,7 +33,7 @@
                                     <td>{{ $r->jk }}</td>
                                     <td>{{ $r->no_hp }}</td>
                                     <td>{{ $r->alamat }}</td>
-                                    <td>{{ $r->penyakit }} - {{ $r->prosentase }} %</td>
+                                    <td>{{ $r->diagnosis }} - {{ $r->prosentase }} %</td>
                                     <td><a href="{{ url('riwayat-diagnosa/detail') }}/{{ $r->id_pasien }}" class="btn btn-outline-success">Detail Diagnosis</a></td>
                                 </tr>
                                 @endforeach

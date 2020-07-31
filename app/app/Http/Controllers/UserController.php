@@ -208,10 +208,10 @@ class UserController extends Controller
     {
         $id_user = Crypt::decrypt($id);
         $user = User::findOrFail($id_user);
-        $g_hidung = DB::table('gejala')->where('jenis', '=', 'Hidung')->get();
-        $g_telinga = DB::table('gejala')->where('jenis', '=', 'Telinga')->get();
-        $g_tenggorokan = DB::table('gejala')->where('jenis', '=', 'Tenggorokan')->get();
-        $g_umum = DB::table('gejala')->where('jenis', '=', 'Umum')->get();
+        $g_hidung = DB::table('gejala')->where([['jenis', '=', 'Hidung'],['deleted_at', null]])->get();
+        $g_telinga = DB::table('gejala')->where([['jenis', '=', 'Telinga'],['deleted_at', null]])->get();
+        $g_tenggorokan = DB::table('gejala')->where([['jenis', '=', 'Tenggorokan'],['deleted_at', null]])->get();
+        $g_umum = DB::table('gejala')->where([['jenis', '=', 'Umum'],['deleted_at', null]])->get();
         return view('user.pages.diagnosa', [
             'user' => $user,
             'g_telinga' => $g_telinga, 
@@ -225,9 +225,9 @@ class UserController extends Controller
     {
         $id_user = Crypt::decrypt($id);
         $riwayat = DB::table('pasien')
-                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'pasien.prosentase', 'penyakit.penyakit', 'users.*')
+                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'pasien.prosentase', 'users.*')
                     ->where([['pasien.deleted_at', null], ['id_user', $id_user]])
-                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    // ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
                     ->join('users', 'pasien.id_user', '=', 'users.id')
                     ->get();
         return view('user.pages.riwayat-diagnosa', ['riwayat'=>$riwayat, 'count'=>count($riwayat)]);
@@ -238,9 +238,10 @@ class UserController extends Controller
         $pasien = DB::table('pasien')
                 ->where('pasien.id', $id)
                 ->join('users', 'pasien.id_user', '=', 'users.id')
-                ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
-                ->select('pasien.*', 'penyakit.*', 'users.*')
+                // ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                ->select('pasien.*', 'users.*')
                 ->first();
+        $penyakit=(explode(',', $pasien->diagnosis));
 
         $kode=(explode(',', $pasien->gejala));
         $kode_gejala = implode("','", $kode);
@@ -248,7 +249,7 @@ class UserController extends Controller
         $sql="SELECT gejala FROM gejala WHERE kode_gejala IN('".$kode_gejala."')";
         $gejala = DB::select($sql);
 
-        return view('user.pages.detail-riwayat-diagnosa', ['data'=>$pasien, 'gejala'=>$gejala]);
+        return view('user.pages.detail-riwayat-diagnosa', ['data'=>$pasien, 'gejala'=>$gejala, 'penyakit'=>$penyakit]);
     }
 
     public function profil($id)

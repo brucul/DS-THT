@@ -73,12 +73,12 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function activating($token)
-    {
-        $model = User::where('token_register', $token)->where('email_verified_at', null)->firstOrFail();
-        // $model->is_active = true;
-        $model->email_verified_at = now();
-        $model->save();
-        return view('auth.verified');
-    }
+    // public function activating($token)
+    // {
+    //     $model = User::where('token_register', $token)->where('email_verified_at', null)->firstOrFail();
+    //     // $model->is_active = true;
+    //     $model->email_verified_at = now();
+    //     $model->save();
+    //     return view('auth.verified');
+    // }
 }

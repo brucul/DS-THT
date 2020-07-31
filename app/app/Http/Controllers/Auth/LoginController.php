@@ -56,11 +56,12 @@ class LoginController extends Controller
             if (auth()->user()->is_admin == 1) {
                 return redirect()->route('admin.home')->withSuccess('Welcome '.auth()->user()->name);
             }else{
-                if (auth()->user()->email_verified_at != null) {
-                    return redirect()->route('home')->withSuccess('Welcome '.auth()->user()->name);
-                } else {
-                    return view('auth.verify');
-                }
+                return redirect()->route('home')->withSuccess('Welcome '.auth()->user()->name);
+                // if (auth()->user()->email_verified_at != null) {
+                //     return redirect()->route('home')->withSuccess('Welcome '.auth()->user()->name);
+                // } else {
+                //     return view('auth.verify');
+                // }
             }
         }else{
             return redirect()->route('login')

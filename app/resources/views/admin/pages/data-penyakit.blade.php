@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Nama Penyakit : </label>
                                 <div class="col-md-12">
-                                    <input type="text" name="penyakit" id="penyakit" class="form-control" autocomplete="off" />
+                                    <input type="text" name="penyakit" id="penyakit" class="form-control hurufSaja" autocomplete="off" />
                                 </div>
                                 <label class="control-label col-md-4">Jenis Penyakit : </label>
                                 <div class="col-md-12">
