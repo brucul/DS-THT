@@ -101,6 +101,45 @@ class FCController extends Controller
      */
     public function edit($id)
     {
+        // $columns = DB::getSchemaBuilder()->getColumnListing('fc_rules');
+        // print_r($columns);
+        // $fc = DB::table('fc_rules')
+        //         ->where('fc_rules.id', $id)
+        //         ->first();
+        // echo "<br/>";
+        $qry='select ';
+        $gejala=Gejala::all();
+        $lastGejala = DB::table('gejala')->select('kode_gejala')->orderBy('id', 'desc')->first();
+        foreach ($gejala as $key => $value) {
+            if ($value->kode_gejala != $lastGejala->kode_gejala) {
+                $qry.=$value->kode_gejala.", ";
+            }
+            if ($value->kode_gejala == $lastGejala->kode_gejala) {
+                $qry.=$value->kode_gejala;
+            }
+        }
+        $qry.=" from fc_rules where id =".$id;
+        // echo $qry;
+        $data=DB::select($qry, []);
+        
+        $kode = json_decode(json_encode($data), true);
+        // print_r($kode);
+        // foreach ($kode as $key => $value) {
+        //     foreach ($value as $val => $v) {
+        //         echo $val." -> ".$v."<br/>";
+        //     }
+        // }
+        // $ar_fc=json_decode(json_encode($fc), true);
+        // foreach ($ar_fc as $key => $value) {
+        //     echo $key." -> ".$value;
+        // }
+        // print_r($ar_fc);
+        // for ($i=1; $i < (sizeof($ar_fc)-5) ; $i++) { 
+        //     $key = array_keys($ar_fc);
+        // }
+        // $key = array_keys($ar_fc);
+        // print_r($key);
+
         $fc = DB::table('fc_rules')
                 ->where('fc_rules.id', $id)
                 ->join('penyakit', 'fc_rules.penyakit', '=', 'penyakit.kode_penyakit')
@@ -110,6 +149,8 @@ class FCController extends Controller
         return view('admin.pages.form-fc-rule', [
             'fc'=>$fc,
             'gejala' => $gejala,
+            // 'ar_fc' => $ar_fc,
+            'kode' => $kode,
         ]);
     }
 

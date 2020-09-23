@@ -24,6 +24,9 @@ Route::get('/', function () {
 	
 });
 
+Route::get('informasi', 'InfoPenyakitController@info')->name('info');
+Route::get('informasi/detail/{id}', 'InfoPenyakitController@show')->name('show');
+
 Auth::routes();
 Auth::routes(['verify' => true]);
 
@@ -38,7 +41,7 @@ Route::group(['middleware' => ['verified', 'is_user']], function () {
 	Route::get('riwayat-diagnosa/cetak-riwayat/{id}', 'UserController@riwayatPDF')->name('cetak-riwayat');
 	Route::get('pegawai/cetak_pdf', 'PegawaiController@cetak_pdf');
 	Route::get('diagnosis/{id}', 'UserController@diagnosa')->name('diagnosa');
-	Route::post('diagnosis/hasil-diagnosis', 'DSController@diagnosis')->name('hasil-diagnosis');
+	Route::post('diagnosis/hasil-diagnosis', 'DSController@fc')->name('hasil-diagnosis');
 	//Route::post('diagnosis/hasil-diagnosis/{id}/gejala', 'DSController@show')->name('gejala-diagnosis');
 	Route::get('profil/{id}', 'UserController@profil')->name('profil');
 	Route::post('profil/update-profil', 'UserController@update_profil')->name('update.profil');
@@ -60,6 +63,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'is_admin', 'as' => 'admin.']
 	Route::get('data-gejala/{id}/edit', 'GejalaController@edit')->name('gejala.edit');
 	Route::post('data-gejala/update', 'GejalaController@update')->name('gejala.update');
 	Route::get('data-gejala/destroy/{id}', 'GejalaController@destroy')->name('gejala.delete');
+	Route::post('trial', 'GejalaController@addcol')->name('trial');
 	
 	//penyakit
 	Route::get('data-penyakit', 'PenyakitController@index')->name('penyakit');

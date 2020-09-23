@@ -37,9 +37,9 @@
                                             <a href="{{ url('/home') }}">Home</a>
                                         @endif
                                     @else
-                                        <a href="{{ route('login') }}">Sign In</a>
+                                        <a href="{{ route('login') }}" style="font-size: 15px; font-weight: bold; border-bottom: solid; border-radius: 5px; padding: 5px">Sign In</a>
                                         @if (Route::has('register'))
-                                            <a href="{{ route('register') }}">Sign Up</a>
+                                            <a href="{{ route('register') }}" style="font-size: 15px; font-weight: bold; border-bottom: solid; border-radius: 5px; padding: 5px">Sign Up</a>
                                         @endif
                                     @endauth
                                 </div>
@@ -70,7 +70,8 @@
                                             <a href="{{ route('admin.home') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
                                         @endif
                                     @else
-                                        <a href="{{ route('login') }}" class="primary-btn banner-btn">Mulai Diagnosis<span class="lnr lnr-arrow-right"></span></a>
+                                        <!-- <a href="{{ route('login') }}" class="primary-btn banner-btn">Mulai Diagnosis</a> -->
+                                        <a href="{{ route('info') }}" class="primary-btn banner-btn">Informasi Penyakit THT</a>
                                     @endauth
                                 </div>
                             @endif

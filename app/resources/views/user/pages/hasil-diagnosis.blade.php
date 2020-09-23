@@ -19,6 +19,16 @@
                         @endforeach
                     </div>
                 </div>
+                @if($hasil=='no')
+                <div class="panel panel-custom">
+                    <div class="panel-heading">
+                        Hasil Akhir
+                    </div>
+                    <div class="panel-body">
+                        Berdasarkan gejala yang anda pilih, penyakit belum bisa dideteksi
+                    </div>
+                </div>
+                @else
                 <div class="panel panel-custom">
                     <div class="panel-heading">
                         Terdeteksi Penyakit
@@ -29,7 +39,6 @@
                                 @foreach ($ranking as $value)
                                 {{ round($value*100,2) }}%<br/>
                                 @endforeach
-                                <!-- {{array_sum($ranking)}} -->
                             </div>
                             <div class="col-md-11">
                                 @foreach (array_keys($ranking) as $key)
@@ -47,8 +56,8 @@
                         Berdasarkan gejala yang anda pilih, terdeteksi penyakit <b>@php echo $penyakit; @endphp</b> dengan prosentase kemungkinan sebesar <b>@php echo $rate."%"; @endphp</b>
                     </div>
                 </div>
+                @endif
                 <a class="btn btn-outline-success" href="{{ url('diagnosis') }}/{{$id}}">Kembali</a>
-                <!-- <a class="btn btn-outline-success" href="{{ url('home/info-penyakit') }}/{{ $kode_penyakit }}">Tentang Penyakit @php echo $penyakit; @endphp</a> -->
             </div>
         </div>
     </div>

@@ -30,9 +30,14 @@ class InfoPenyakitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function info()
     {
-        //
+        $penyakit = DB::table('info_penyakit')
+                    ->join('penyakit', 'info_penyakit.kode', '=', 'penyakit.kode_penyakit')
+                    ->select('info_penyakit.*', 'penyakit.*')
+                    ->where('penyakit.deleted_at', null)
+                    ->get();
+        return view('info', ['penyakit' => $penyakit]);
     }
 
     /**
@@ -54,7 +59,8 @@ class InfoPenyakitController extends Controller
      */
     public function show($id)
     {
-        //
+        $penyakit = InfoPenyakit::where('kode', $id)->first();
+        return view('detail-info', ['penyakit' => $penyakit]);
     }
 
     /**

@@ -92,7 +92,7 @@ class DSController extends Controller
         $id='';
 
         $arr = DB::table('fc_rules')
-                // ->select('penyakit as id','G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12','G13','G14','G15','G16','G17','G18','G19','G20','G21','G22','G23','G24','G25','G26','G27','G28','G29','G30','G31','G32','G33','G34','G35','G36','G37','G38','G39','G40','G41','G42','G43','G44','G45','G46','G47','G48','G49')
+                ->select('penyakit as id','G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12','G13','G14','G15','G16','G17','G18','G19','G20','G21','G22','G23','G24','G25','G26','G27','G28','G29','G30','G31','G32','G33','G34','G35','G36','G37','G38','G39','G40','G41','G42','G43','G44','G45','G46','G47','G48')
                 ->get();
         $arr_rule = json_decode(json_encode($arr), true);
 
@@ -102,17 +102,16 @@ class DSController extends Controller
             $key=array_keys($arr_rule[$i]);
             $val=$arr_rule[$i];
             $sub_rule=array();
-            for($j=1;$j<(sizeof($key));$j++){
+            for($j=0;$j<(sizeof($key));$j++){
                 if($val[$key[$j]]==1)
                     $sub_rule[]=$key[$j];
             }
             $rule[]=$sub_rule;
         }
         $status=false;
-        // foreach ($rule as $key => $value) {
-        //     print_r($value);
-        //     echo "<br/>";
-        // }
+        // 
+        // print_r($input);
+        // echo "<br/>";
         foreach ($input as $value) {
             $hilang[]=substr($value, 1);
         }
@@ -120,41 +119,87 @@ class DSController extends Controller
         foreach ($hilang as $value) {
             $rule_input[]="G".$value;
         }
-        // $evidence=0;
-        // $kode_fc=0;
-        // for ($i=0; $i <sizeof($rule); $i++) {
-        //     $evidence=0;
-        //     $kode_fc++;
-        //     foreach ($rule_input as $ev) {
-        //         if (in_array($ev, $rule[$i])) {
-        //             $evidence++;
-        //             // echo sizeof($rule[$i]);
-        //             if ($evidence==sizeof($rule[$i])) {
-        //                 // echo sizeof($rule[$i])."<br/>";
-        //                 // echo $kode_fc."<br/>";
-        //                 $status=true;
-        //                 break 2;
+        // print_r($rule_input);
+        // echo "<br/>";
+        // foreach ($rule as $key => $value) {
+        //     print_r($value);
+        //     echo "<br/>";
+        // }
+        
+        // foreach ($rule as $key => $value) {
+        //     print_r($value);
+        // }
+
+        // mencocokan gejala yang di inputkan user dengan rule yang ada
+        // for ($i=0; $i <9 ; $i++) {
+        //     $result=($rule_input==$rule[$i]);
+        //     if ($result) {
+        //         $status=true;
+        //     }
+        // }
+        // print_r($rule_input);
+        // echo "<br/>";
+        $count=0;
+        // foreach ($rule as $value) {
+        //     print_r($value);
+        //     echo "<br/>";
+        //     $count=0;
+        //     foreach ($rule_input as $val) {
+        //         if (in_array($val, $value)) {
+        //             $count++;
+        //             echo $count;
+        //             if ($count<sizeof($value)) {
+        //                 $status='false';
+        //             }else{
+        //                 $status='true';
         //             }
         //         }
         //     }
         // }
 
-        for ($i=0; $i <sizeof($rule) ; $i++) {
-            $result=($rule_input==$rule[$i]);
-            if ($result) {
-                $status=true;
+        // echo $status;
+        $p=0;
+
+        for ($i=0; $i <sizeof($rule); $i++) {
+            // print_r($rule[$i]);
+            // echo "<br/>";
+            $count=0;
+            foreach ($rule_input as $val) {
+                if (in_array($val, $rule[$i])) {
+                    $count++;
+                    if ($count>=sizeof($rule[$i])) {
+                        // print_r(array_keys($rule[$i]));
+                        $status=true;
+                        break;
+                    }
+                    // if ($count<sizeof($rule[$i])) {
+                    //     $status=false;
+                    // }
+                }
             }
         }
+        
+        // echo $status."<br/>";
+        // print_r($data);
+        // if (in_array($rule_input, $rule)) {
+        //     $status=true;
+        // }
+        // for ($i=0; $i <sizeof($rule); $i++) {
+        //     $result=($rule_input==$rule[$i]);
+        //     if ($result) {
+        //         $status=true;
+        //     }
+        // }
 
-        // //jika di temukan akan menampilkan info dan solusi dari penyakit yang di derita
+        //jika di temukan akan menampilkan info dan solusi dari penyakit yang di derita
         if($status==true){
             foreach ($data as $key => $value) {
                 $id = $value->id;
             }
-            $diagnosis=DB::table('penyakit')->where('kode_penyakit', "P".$id)->first();
-            // foreach ($diagnosis as $key => $value) {
-            //     $hasil_fc=$value->penyakit;
-            // }
+            $diagnosis=DB::table('penyakit')->where('kode_penyakit', $id)->get();
+            foreach ($diagnosis as $key => $value) {
+                $hasil_fc=$value->penyakit;
+            }
 
             $sql = "SELECT GROUP_CONCAT(b.penyakit) AS code, a.bobot
             FROM ds_rules a
@@ -265,7 +310,7 @@ class DSController extends Controller
                 'list'=>$list_densitas, 
                 'ranking'=>$perangkingan, 
                 'kode_penyakit'=>$row[0]['kode_penyakit'],
-                'hasil_fc'=>$diagnosis,
+                // 'hasil_fc'=>$hasil_fc,
                 'penyakit'=>$row[0][0], 
                 'rate'=>round($densitas_baru[$codes[0]]*100,2), 
                 'ev'=>$gejala,
@@ -280,7 +325,22 @@ class DSController extends Controller
 
     public function diagnosis(Request $request)
     {
+        $rules = array(
+            'nama' => 'required',
+            'tanggal' => 'required|before:today',
+            'jenis_kelamin' => 'required',
+            'no_hp' => 'required|numeric',
+            'alamat' => 'required',
+            'evidence' => 'required'
+        );
 
+        $error = Validator::make($request->all(), $rules);
+
+        if($error->fails()){
+            return back()->with('toast_error', $error->errors()->all()[0]);
+        } else {
+            
+        }
     }
 
 

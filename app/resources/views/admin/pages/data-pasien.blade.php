@@ -89,7 +89,7 @@
             { data: 'jk', name: 'jenis_kelamin' },
             { data: 'no_hp', name: 'no_hp' },
             { data: 'alamat', name: 'alamat' },
-            { data: 'penyakit', name: 'penyakit' },
+            { data: 'diagnosis', name: 'diagnosis' },
             { data: 'action', name: 'action', orderable: false }
             ]
         });

@@ -13,11 +13,11 @@ class AddTriggerForwardChaining extends Migration
      */
     public function up()
     {
-        // DB::unprepared('CREATE TRIGGER add_penyakit_forward_chaining AFTER INSERT ON `info_penyakit` FOR EACH ROW
-        //     BEGIN
-        //         INSERT INTO `fc_rules` (`penyakit`) VALUES (NEW.kode);
-        //     END
-        // ');
+        DB::unprepared('CREATE TRIGGER add_penyakit_forward_chaining AFTER INSERT ON `info_penyakit` FOR EACH ROW
+            BEGIN
+                INSERT INTO `fc_rules` (`penyakit`) VALUES (NEW.kode);
+            END
+        ');
     }
 
     /**

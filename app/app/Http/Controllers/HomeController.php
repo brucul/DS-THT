@@ -35,21 +35,21 @@ class HomeController extends Controller
     public function adminHome()
     {
         $telinga = DB::table('penyakit')
-                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.penyakit')
                     ->select('penyakit.penyakit', DB::raw('count(pasien.diagnosis) as jumlah'))
                     ->where('penyakit.jenis', 'Telinga')
                     ->groupBy('penyakit.penyakit')
                     ->get();
 
         $hidung = DB::table('penyakit')
-                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.penyakit')
                     ->select('penyakit.penyakit', DB::raw('count(pasien.diagnosis) as jumlah'))
                     ->where('penyakit.jenis', 'Hidung')
                     ->groupBy('penyakit.penyakit')
                     ->get();
 
         $tenggorokan = DB::table('penyakit')
-                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->join('pasien', 'pasien.diagnosis', '=', 'penyakit.penyakit')
                     ->select('penyakit.penyakit', DB::raw('count(pasien.diagnosis) as jumlah'))
                     ->where('penyakit.jenis', 'Tenggorokan')
                     ->groupBy('penyakit.penyakit')

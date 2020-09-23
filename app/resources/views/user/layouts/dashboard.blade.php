@@ -73,7 +73,7 @@
         	<div class="container">
         		<div class="row">
         			<div class="col-md-12">
-        				Sistem Pakar - Diagnosis Penyakit THT | 2020
+        				Sistem Pakar - Diagnosis Penyakit THT | @php echo date('Y'); @endphp
         			</div>
         		</div>
         	</div>

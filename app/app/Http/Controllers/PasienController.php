@@ -29,9 +29,9 @@ class PasienController extends Controller
         {
             return datatables()
                 ->of(DB::table('pasien')
-                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'penyakit.penyakit', 'users.*')
+                    ->select('pasien.id as id_pasien', 'pasien.diagnosis', 'users.*')
                     ->where('pasien.deleted_at', null)
-                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    // ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
                     ->join('users', 'pasien.id_user', '=', 'users.id')
                     ->get())
                 ->addIndexColumn()
@@ -160,8 +160,8 @@ class PasienController extends Controller
         // $id_user = Crypt::decrypt($id);
         $data = DB::table('pasien')
                     ->join('users', 'pasien.id_user', '=', 'users.id')
-                    ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
-                    ->select('pasien.*', 'users.*', 'penyakit.penyakit')
+                    // ->join('penyakit', 'pasien.diagnosis', '=', 'penyakit.kode_penyakit')
+                    ->select('pasien.*', 'users.*')
                     ->orderBy('name')
                     // ->where('id_user', $id_user)
                     ->get();

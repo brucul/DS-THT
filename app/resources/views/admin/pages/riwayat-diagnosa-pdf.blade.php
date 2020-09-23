@@ -53,7 +53,7 @@
 				<td>{{ $r->jk }}</td>
 				<td>{{ $r->no_hp }}</td>
 				<td>{{ $r->alamat }}</td>
-				<td>{{ $r->penyakit }} - {{ $r->prosentase }} %</td>
+				<td>{{ $r->diagnosis }} - {{ $r->prosentase }} %</td>
 			</tr>
 			@endforeach
 		</tbody>

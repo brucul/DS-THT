@@ -9,6 +9,8 @@ use Validator;
 use DataTables;
 use Alert;
 use Illuminate\Validation\Rule;
+use Schema;
+
 
 class GejalaController extends Controller
 {
@@ -60,6 +62,7 @@ class GejalaController extends Controller
     {
         $kode_gejala = DB::table('gejala')->count('kode_gejala')+1;
 
+
         $gejala = DB::table('gejala')->where([['gejala', $request->gejala], ['deleted_at', '!=', null]])->count('gejala');
         $rules = array(
             'gejala' =>  'required|unique:gejala,gejala',
@@ -80,8 +83,22 @@ class GejalaController extends Controller
                 'jenis' => $request->jenis,
             );
             Gejala::create($form_data);
+
+            $col = 'G'.strval($kode_gejala-1);
+            $type = 'boolean';
+            $fieldName = 'G'.strval($kode_gejala);
+
+            Schema::table('fc_rules', function ($table) use ($type, $fieldName, $col) {
+                $table->$type($fieldName)->after($col)->default(0);
+            });
+
             return response()->json(['success' => 'Data Added successfully.']);
         }
+    }
+
+    public function addcol(Request $request)
+    {
+               
     }
 
     /**
@@ -149,6 +166,24 @@ class GejalaController extends Controller
     {
         $data = Gejala::findOrFail($id);
         $data->delete();
+        $fc = DB::table('fc_rules')->select('id')->get();
+        $lastId = DB::table('fc_rules')->select('id')->orderBy('id', 'desc')->first();
+
+        $sql = 'update fc_rules set '.$data->kode_gejala.' = 0 where id =';
+        foreach ($fc as $key => $value) {
+            if ($value->id != $lastId->id) {
+                $sql.=$value->id." or id = ";
+            }
+            if ($value->id == $lastId->id) {
+                $sql.=$value->id;
+            }
+            
+        }
+        DB::select($sql, []);
+
+        // Schema::table('fc_rules', function ($table) use ($fieldName) {
+        //     $table->dropColumn($fieldName);
+        // }); 
             
         return response()->json(['success' => 'Data is successfully deleted']);
     }
